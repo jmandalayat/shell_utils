@@ -1,0 +1,27 @@
+gpg_utils
+
+Utilidades para facilitar el uso de GnuPG. Implementa un criptosistema en la máquina que hace uso de los scripts. El criptosistema requiere que las siguientes variables de entorno estén configuradas:
+
+	GPG_K_1: UID de la clave 1.
+
+	GPG_K_2: UID de la clave 2.
+
+	GPG_K_3: UID de la clave 3.
+
+	GPG_CS_1: Contraseña de la clave 1.
+
+	GPG_CS_2: Contraseña de la clave 2.
+
+	GPG_CS_3: Contraseña de la clave 3.
+
+Elementos:
+
+	nueva_clave.sh: Genera una nueva clave con una contraseña aleatoria.
+
+	en_dir.sh: Cifra el directorio indicado con la clave por defecto.
+
+	des_dir.sh: Descifra el directorio indicado con la clave por defecto.
+
+	cifra_up.sh: Respaldar cifrado con GPG. Depende de "en_dir.sh".
+
+	cifra_down.sh: Respaldar cifrado con GPG. Depende de "des_dir.sh".

@@ -1,3 +1,0 @@
-nueva_clave.sh
-
-Genera una nueva clave con una contraseña aleatoria.

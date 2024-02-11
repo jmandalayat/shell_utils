@@ -1,3 +1,0 @@
-des_dir.sh: Descifra el directorio indicado con la clave por defecto.
-
-en_dir.sh: cifra el directorio indicado con la clave por defecto.
