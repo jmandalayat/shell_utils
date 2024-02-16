@@ -1,5 +1,12 @@
 #! /bin/bash
 
+if [[ -z $PREF ]]
+then
+
+	echo "No se ha definido un directorio de preferencias en la variable PREF"
+	exit
+fi
+
 echo "Exportando atajos de teclado"
 echo
 

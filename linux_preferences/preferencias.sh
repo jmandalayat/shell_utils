@@ -1,10 +1,11 @@
 #! /bin/bash
 
+if [[ -z $PREF ]]
+then
 
-
-echo
-
-
+	echo "No se ha definido un directorio de preferencias en la variable PREF"
+	exit
+fi
 
 echo "Actualizando preferencias de usuario:"
 ls "$PREF"
