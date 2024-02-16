@@ -1,5 +1,12 @@
 #! /bin/bash
 
+if [[ -z $IT_NIA ]]
+then
+
+	echo "No se ha definido un usuario de IT en la variable IT_NIA"
+	exit
+fi
+
 if [[ $# == 1 ]]
 then
 	sftp "$IT_NIA@$1.lab.it.uc3m.es"
