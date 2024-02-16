@@ -7,12 +7,12 @@ echo
 
 # Se actualizan los paquetes
 echo "Actualizando paquetes"
-upgrade_output=$(sudo apt-get upgrade -y)
-echo "$upgrade_output"
+sudo apt-get upgrade -y
 echo
 
 # Se comprueba si hay paquetes retenidos
 echo "Comprobando paquetes retenidos..."
+upgrade_output=$(sudo apt-get upgrade -y)
 if [[ $(echo "$upgrade_output" | grep "retenido") || $(echo "$upgrade_output" | grep "kept back") ]]
 then
 	echo "Se han encontrado paquetes retenidos..."
