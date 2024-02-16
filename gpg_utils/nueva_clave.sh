@@ -34,3 +34,12 @@ echo "Usuario de la clave: $usuario"
 # Se muestra la contraseña
 echo
 echo "Contraseña de la clave: $supercontra"
+
+
+
+#if [[ $(gpg --encrypt --recipient FINGERPRINTDELACONTRA --output /dev/null chat.txt | grep "failed") ]]
+#then
+#	echo "Positivo"
+#else
+#	echo "Negativo"
+#fi
