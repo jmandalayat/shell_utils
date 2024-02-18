@@ -1,0 +1,1 @@
+Directory name%Encripted directory path%Encripted directory stage area path%Directory stage area path%Directory path%Key UID

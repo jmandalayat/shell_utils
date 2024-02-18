@@ -29,7 +29,7 @@ do
 	f_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
 	d_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
 	d_local=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
-	no_clave=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
+	uid_clave=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
 
 	if [[ -d $d_local ]]
 	then
@@ -59,7 +59,7 @@ do
 			echo
 
 			# Se comprime y cifra el directorio
-			"$SCRIPTS/en_dir.sh" "$d_cifra" "$f_cifra" $no_clave
+			"$SCRIPTS/en_dir.sh" "$d_cifra" "$f_cifra" $uid_clave
 
 			# Se comprueba si se ha cifrado el fichero
 			if [[ ! -f "$f_cifra" ]]

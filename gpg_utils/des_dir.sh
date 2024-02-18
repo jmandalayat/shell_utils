@@ -8,7 +8,7 @@ if [[ $# != 3 ]]
 then
 
 	echo "Modo de uso:"
-	echo "  des-dir [ruta al fichero] [directorio de salida] [número de la clave]"
+	echo "  des-dir [ruta al fichero] [directorio de salida] [UID de la clave]"
 
 	exit
 fi
@@ -32,6 +32,17 @@ if [[ -d $2 ]]
 then
 
 	echo "Ya existe el directorio especificado: $2"
+	exit
+fi
+
+
+
+# Se comprueba si existe la clave
+
+if [[ !$(gpg -k | grep $3) ]]
+then
+
+	echo "No existe la clave indicada: $3"
 	exit
 fi
 
@@ -67,43 +78,15 @@ fi
 
 
 
-# Se selecciona la clave y la contraseña
+# Se selecciona la contraseña
 
-case $3 in
-	1)
-		GPG_K=$GPG_K_1
-		GPG_CS=$GPG_CS_1
-	;;
-	2)
-		GPG_K=$GPG_K_2
-		GPG_CS=$GPG_CS_2
-	;;
-	3)
-		GPG_K=$GPG_K_3
-		GPG_CS=$GPG_CS_3
-	;;
-	*)
-		echo "Solo se han habilitado tres claves en este sistema"
-		exit
-	;;
-esac
-
-
-
-# Se comprueba si está definida la clave
-
-if [[ -z $GPG_K ]]
-then
-
-	echo "No hay definida una clave para cifrar/descifrar"
-	exit
-fi
+contra=$(grep "$3" "$GPGUTILSTABLE" | awk -F% '{ print $6 }')
 
 
 
 # Desencriptar
 
-gpg -d --pinentry-mode loopback --batch --passphrase "$GPG_CS" -o "$file" -v "$1"
+gpg -d --pinentry-mode loopback --batch --passphrase "$contra" -o "$file" -v "$1"
 
 
 

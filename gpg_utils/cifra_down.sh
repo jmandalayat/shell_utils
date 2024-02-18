@@ -29,7 +29,7 @@ do
 	f_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
 	d_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
 	d_local=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
-	no_clave=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
+	uid_clave=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
 
 	if [[ -d $d_local ]]
 	then
@@ -51,7 +51,7 @@ do
 			cp "$f_nube" "$f_cifra"
 
 			# Se extrae el fichero comprimido y se descifra
-			"$SCRIPTS/des_dir.sh" "$f_cifra" "$d_cifra" $no_clave
+			"$SCRIPTS/des_dir.sh" "$f_cifra" "$d_cifra" $uid_clave
 
 			echo "Se procede a la sincronización"
 			echo

@@ -8,7 +8,7 @@ if [[ $# != 3 ]]
 then
 
 	echo "Modo de uso:"
-	echo "  en-dir [ruta al directorio] [fichero de salida] [número de la clave]"
+	echo "  en-dir [ruta al directorio] [fichero de salida] [UID de la clave]"
 
 	exit
 fi
@@ -32,6 +32,17 @@ if [[ -f $2 ]]
 then
 
 	echo "Ya existe el fichero especificado: $2"
+	exit
+fi
+
+
+
+# Se comprueba si existe la clave
+
+if [[ !$(gpg -k | grep $3) ]]
+then
+
+	echo "No existe la clave indicada: $3"
 	exit
 fi
 
@@ -67,37 +78,6 @@ fi
 
 
 
-# Se selecciona la clave
-
-case $3 in
-	1)
-		GPG_K=$GPG_K_1
-	;;
-	2)
-		GPG_K=$GPG_K_2
-	;;
-	3)
-		GPG_K=$GPG_K_3
-	;;
-	*)
-		echo "Solo se han habilitado tres claves en este sistema"
-		exit
-	;;
-esac
-
-
-
-# Se comprueba si está definida la clave
-
-if [[ -z $GPG_K ]]
-then
-
-	echo "No hay definida una clave para cifrar/descifrar"
-	exit
-fi
-
-
-
 # Comprimir
 
 tar -C "$dire" -czvf "$file" .
@@ -106,7 +86,7 @@ tar -C "$dire" -czvf "$file" .
 
 # Encriptar
 
-gpg -e --cipher-algo AES256 -r $GPG_K -o "$2" -v "$file"
+gpg -e --cipher-algo AES256 -r $3 -o "$2" -v "$file"
 
 
 
