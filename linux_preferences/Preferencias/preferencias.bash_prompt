@@ -1,0 +1,146 @@
+#########################
+#                       #
+# Prompt personalizado. #
+#                       #
+#########################
+
+
+
+# Guía rápida
+
+# Caracteres especiales a tener en cuenta:
+#	\h ---> Nombre del host
+#	\n ---> Nueva línea
+#	\s ---> Nombre de la shell
+#	\t ---> Hora actual
+#	\u ---> Nombre de usuario que ha accedido
+#	\w ---> Directorio de trabajo actual
+#	\W ---> Nombre de base del directorio de trabajo actual
+
+# Configuración de color y fuente:
+#	\[$(tput setaf COLOR)\] ---> El texto a partir de este comando será del color indicado
+#	\[\033[COLORm\] ---> El texto a partir de este comando será del color indicado (forma alternativa)
+#	\[\033[00m\] ---> Se restaura el color por defecto
+#	\[$(tput sgr0)\] ---> Se restaura el estilo por defecto
+#	\[$(tput bold)\] ---> El texto a partir de este comando estará en negrita
+
+
+
+# Ajustes básicos
+
+case "$TERM" in
+
+	# Se configura un "prompt" elegante (sin color a menos que sepamos que "queramos" un color)
+	xterm-color|*-256color)
+		color_prompt=yes
+	;;
+
+	# Si esto es una terminal "xterm", se configura el título a user@host:dir.
+	xterm*|rxvt*)
+		PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
+	;;
+
+	*)
+	;;
+esac
+
+
+
+# Prompt coloreado (si la terminal tiene esa capacidad).
+
+force_color_prompt=yes
+
+if [ -n "$force_color_prompt" ]
+then
+	if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null
+	then
+		# Se habilita el soporte de color conforme a Ecma-48 (ISO/IEC-6429). La carenciade este soporte es extremadamente poco frecuente, en tal caso se soportaría "setf" en lugar de "setaf".
+		color_prompt=yes
+	else
+		color_prompt=
+	fi
+fi
+
+
+
+# Distintas opciones de prompt
+
+if [ "$color_prompt" = yes ]
+then
+	# Original
+
+	# Chroot de Debian
+	PS1='${debian_chroot:+($debian_chroot)}'
+	# Usuario en color
+	PS1+='\[\033[01;32m\]\u'
+	# Separador
+	PS1+='@'
+	# Nombre del host
+	PS1+='\h'
+	# Separador (:)
+	PS1+='\[\033[00m\]:'
+	# Directorio de trabajo actual
+	PS1+='\[\033[01;34m\]\w'
+	# Terminación (\$ )
+	PS1+='\[\033[00m\]\$ '
+
+	# Línea coloreada (basado en el de Corey Schafer)
+
+	# Colores personalizados
+	rojo=9
+	naranja=166
+	amarillo=228
+	verde=71
+	azul=12
+	violeta=13
+	blanco=15
+	negro=0
+
+	# Chroot de Debian
+#	PS1='${debian_chroot:+($debian_chroot)}'
+	# Estilo
+#	PS1+='\[$(tput bold)\]'
+	# Usuario
+#	PS1+='\[$(tput setaf $blanco)\]\u'
+	# Separador ( <@> )
+#	PS1+='\[$(tput setaf $verde)\] <@> '
+	# Nombre del host
+#	PS1+='\[$(tput setaf $amarillo)\]\h'
+	# Separador ( :)
+#	PS1+='\[$(tput setaf $blanco)\] :'
+	# Directorio de trabajo actual
+#	PS1+='\[$(tput setaf $violeta)\]\w'
+	# Terminación ( <$> )
+#	PS1+='\[$(tput setaf $blanco)\] <$> '
+	# Restaurar colores
+#	PS1+='\[$(tput sgr0)\]'
+
+	# Eliminamos las variables
+	unset rojo
+	unset naranja
+	unset amarillo
+	unset verde
+	unset azul
+	unset violeta
+	unset blanco
+	unset negro
+else
+	# Prompt sencillo en caso de que no haya color
+
+	# Chroot de Debian
+	PS1='${debian_chroot:+($debian_chroot)}'
+	# Usuario
+	PS1+='\u'
+	# Separador (@)
+	PS1+='@'
+	# Nombre del host
+	PS1+='\h'
+	# Separador (:)
+	PS1+=':'
+	# Directorio de trabajo actual
+	PS1+='\w'
+	# Terminación (\$ )
+	PS1+='\$ '
+fi
+
+unset color_prompt force_color_prompt

@@ -1,0 +1,568 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.bash_aliases", el cual, es llamado al iniciarse una sesión en la terminal #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+# Personalización de comandos
+
+## Añadimos color a comandos frecuentes
+if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -x /usr/bin/dircolors ]]
+then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	alias ls='ls --color=auto'
+	alias dir='dir --color=auto'
+	alias vdir='vdir --color=auto'
+	alias grep='grep --color=auto'
+	alias fgrep='fgrep --color=auto'
+	alias egrep='egrep --color=auto'
+	alias diff='diff --color=auto'
+	alias ip='ip --color=auto'
+fi
+
+## Añadimos formas de mostrar archivos
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+## Nuevo calendario
+if [[ $(whereis ncal | grep "/") ]]
+then
+	alias cal='ncal -b3wM'
+fi
+
+
+
+# Utilidades varias
+
+## Alias de alerta para comandos de ejecución prolongada. Se recomienda usarlo de la siguiente manera:
+#	sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+## Limpiar historial de Linux
+
+alias limpiar_historial='history -c && cat /dev/null > $HISTFILE'
+
+## Perspectiva de género para el manual (Agenda 2030)
+alias woman=man
+
+## Manual de configuración de red: Linux Advanced Routing & Traffic Control HOWTO (Bert Hubert)
+alias lartc='curl -s https://www.lartc.org/lartc.txt'
+
+## Capturar pantalla
+alias grabar='recordmydesktop'
+
+## Utilidades de ffmpeg
+if [[ $(whereis ffmpeg | grep "/") ]]
+then
+	### Unir audio y video
+	alias unir='ffmpeg -i video.mp4 -i audio.mp4 -c:v copy -c:a aac salida.mp4'
+fi
+
+## Eliminar ficheros de git
+alias ungit='find . -name *git* -exec rm -r {} +'
+
+if [[ $(whereis trans | grep "/") ]]
+then
+	## Traducir de castellano a inglés
+	alias trad-es-in='trans es:en'
+
+	## Traducir de inglés a castellano
+	alias trad-in-es='trans en:es'
+fi
+
+
+
+# Sincronización con la nube y respaldo
+
+if [[ $(dpkg -s rclone 2> /dev/null) ]]
+then
+
+	###
+fi
+
+
+
+# Iniciar y terminar
+
+## Actualizar y apagar
+alias salir='actualizar && sudo shutdown && limpiar_historial && exit'
+
+
+
+# Descargar vídeos (yt-dlp)
+
+if [[ $(whereis yt-dlp | grep "/") ]]
+then
+
+	## Ver formatos de la fuente
+	alias desc-formato='yt-dlp -F'
+
+	## Descargar música de YouTube
+	alias desc-musica='yt-dlp --audio-quality max --extract-audio'
+
+	## Descargar en formato MP4
+	alias desc-mp4='yt-dlp -f mp4'
+
+	## Descargar en 1080p (se usan los flujos más frecuentes en YouTube)
+	alias desc-1080p='yt-dlp -f 137+140'
+fi
+
+
+
+# Anotaciones
+
+##
+
+
+
+# LaTeX
+
+## Compiladores
+if [[ $(dpkg -s texlive 2> /dev/null) || $(dpkg -s texlive-full 2> /dev/null) ]]
+then
+	### Compilar con PdfLaTeX
+	alias pdflatex='pdflatex -synctex=1 -interaction=nonstopmode *.tex'
+
+	### Compilar con LaTeX
+	alias latex='latex -synctex=1 -interaction=nonstopmode *.tex'
+
+	### Compilar con XeLaTeX
+	alias xelatex='xelatex -synctex=1 -interaction=nonstopmode *.tex'
+
+	### Compilar con LuaLaTeX
+	alias lualatex='lualatex -interaction=nonstopmode *.tex'
+fi
+
+## Compilar con Bibtex
+if [[ $(dpkg -s texlive-bibtex-extra 2> /dev/null) ]]
+then
+	alias bibtex='bibtex *.aux'
+fi
+
+## Compilar con Biber
+if [[ $(dpkg -s biber 2> /dev/null) ]]
+then
+	alias biber='biber *.bcf'
+fi
+
+## Rutina de compilación completa
+if [[ $(alias pdflatex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias pdflatex-full='"$SCRIPTS/pdflatex_full.sh"'
+fi
+if [[ $(alias latex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias latex-full='"$SCRIPTS/latex_full.sh"'
+fi
+if [[ $(alias xelatex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias xelatex-full='"$SCRIPTS/xelatex_full.sh"'
+fi
+if [[ $(alias lualatex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias lualatex-full='"$SCRIPTS/lualatex_full.sh"'
+fi
+
+## Eliminar ficheros generados
+alias tex-purge='rm *.aux ; rm *.bcf ; rm *.lof ; rm *.log ; rm *.lot ; rm *.out ; rm *.run.xml ; rm *.synctex.gz ; rm *.synctex ; rm *.toc ; rm pdfa.xmpi ; rm *.bbl ; rm *.blg ; rm *.cut'
+
+
+
+# Scripts básicos
+
+## Actualizar paquetes
+alias actualizar='"$SCRIPTS/actualizar.sh"'
+
+## Actualizar preferencias
+alias preferencias='"$SCRIPTS/preferencias.sh"'
+
+## Exportar ajustes de KDE a la carpeta de preferencias
+alias export_kde='"$SCRIPTS/export_kde.sh"'
+
+## Exportar preferencias
+alias export_pref='rsync --progress -aP --delete "$PREF" "$DOC"'
+
+## Importar preferencias
+alias import_pref='rsync --progress -aP --delete "$DOC/Preferencias" "$HOME"'
+
+
+
+# Scripts para utilidades
+
+## RFC
+alias rfc='"$SCRIPTS/rfc.sh"'
+
+## Obtener línea
+alias getline='"$SCRIPTS/getline.sh"'
+
+## Monoespaciado en WhatsApp
+#alias wa_mono='"$SCRIPTS/wa_mono.sh"'
+
+## Encriptar directorio
+alias en-dir='"$SCRIPTS/en_dir.sh"'
+
+## Desencriptar directorio
+alias des-dir='"$SCRIPTS/des_dir.sh"'
+
+## Dividir CSV en partes
+alias split_csv='"$SCRIPTS/split_csv.sh"'
+
+## Unir partes de CSV
+alias merge_csv='"$SCRIPTS/merge_csv.sh"'
+
+## Leer texto de imagen
+alias leer='"$SCRIPTS/leer.sh"'
+
+## Actualizar repositorios
+alias pull-full='"$SCRIPTS/pull_full.sh"'
+
+## Crear nueva clave
+alias nueva_clave='$SCRIPTS/nueva_clave.sh'
+
+
+
+# Scripts de ffmpeg
+
+## Recortar clip
+alias recortar='"$SCRIPTS/recortar.sh"'
+
+## Recortar vídeo
+alias recortar_video='"$SCRIPTS/recortar_video.sh"'
+
+## Recortar audio
+alias recortar_audio='"$SCRIPTS/recortar_audio.sh"'
+
+
+
+# Laboratorio del departamento de Ingeniería Telemática
+
+## Conexiones SSH a los laboratorios de telemática
+alias lab_it='"$SCRIPTS/lab_it.sh"'
+
+## Conexión FTP con los laboratorios de telemática
+alias lab_it_ftp='"$SCRIPTS/lab_it_ftp.sh"'
+
+
+
+# Herramientas externas instaladas (muchas de ellas en ~/Programas)
+
+## MATLAB
+if [[ ! -z $MATLAB ]]
+then
+	alias matlab="$MATLAB"
+fi
+
+## Eclipse
+if [[ -f "$PROG/eclipse-java/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-java/eclipse'
+fi
+if [[ -f "$PROG/eclipse-cpp/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-cpp/eclipse'
+fi
+if [[ -f "$PROG/eclipse-web/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-web/eclipse'
+fi
+if [[ -f "$PROG/eclipse-cdist/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-cdist/eclipse'
+fi
+
+## Android Studio.
+#if [[ ! -z $ANDROID_STUDIO ]]
+#then
+	####Solo es necesario configurar este alias si la ruta a Android Studio no ha sido añadida al Path.
+	#alias android-studio='$ANDROID_STUDIO/bin/studio.sh'
+#fi
+
+## Google Cloud
+if [[ ! -z $GCLOUD_HOME ]]
+then
+	### Consultar log
+	alias gcloud-log='gcloud app logs tail -s default'
+
+	### Desplegar aplicación
+	alias gcloud-deploy='gcloud app deploy'
+fi
+
+## Socket
+if [[ -f "$PROG/sock" ]]
+then
+	alias sock='$PROG/sock'
+fi
+
+## John the Ripper
+if [[ -d "$PROG/john/" ]]
+then
+	alias john='$PROG/john/run/john'
+	alias john-pot='cat $PROG/john/run/john.pot'
+	alias john-clear='rm $PROG/john/run/john.pot ; rm $PROG/john/run/john.log'
+	alias john-conf='"$EDITOR" $PROG/john/run/john.conf &'
+	alias john-log='cat $PROG/john/run/john.log'
+	alias john-restart='john-clear && cd $PROG/john-1.9.0/run/ && make clean generic'
+	alias "john-doc-changes"='cat $PROG/john/doc/CHANGES'
+	alias "john-doc-config"='cat $PROG/john/doc/CONFIG'
+	alias "john-doc-contact"='cat $PROG/john/doc/CONTACT'
+	alias "john-doc-copying"='cat $PROG/john/doc/COPYING'
+	alias "john-doc-credits"='cat $PROG/john/doc/CREDITS'
+	alias "john-doc-examples"='cat $PROG/john/doc/EXAMPLES'
+	alias "john-doc-external"='cat $PROG/john/doc/EXTERNAL'
+	alias "john-doc-faq"='cat $PROG/john/doc/FAQ'
+	alias "john-doc-install"='cat $PROG/john/doc/INSTALL'
+	alias "john-doc-license"='cat $PROG/john/doc/LICENSE'
+	alias "john-doc-modes"='cat $PROG/john/doc/MODES'
+	alias "john-doc-options"='cat $PROG/john/doc/OPTIONS'
+	alias "john-doc-readme"='cat $PROG/john/doc/README'
+	alias "john-doc-rules"='cat $PROG/john/doc/RULES'
+fi
+
+## Pakhus
+if [[ -d $PROG/pakhus/ ]]
+then
+	alias pakhus='previo="$PWD" && cd $PROG/pakhus/ && java -cp iaik_jce_full.jar:. a && cd "$previo"'
+fi
+
+## Minarke
+if [[ -d "$PROG/minarke/" ]]
+then
+	alias minarke='$PROG/minarke/minarke'
+	alias minarke-restart='cd $PROG/minarke/ && make clean && make'
+fi
+
+## Microwind
+if [[ -f "$PROG/Microwind1/MicroWind.exe" ]]
+then
+	alias microwind='wine $PROG/Microwind1/MicroWind.exe'
+fi
+
+## LTspice XVII
+if [[ -f "$HOME/.wine/dosdevices/c:/users/$USER/Start Menu/LTspice XVII.lnk" ]]
+then
+	alias ltspice='env WINEPREFIX="$HOME/.wine" wine-stable C:\\windows\\command\\start.exe /Unix "$HOME/.wine/dosdevices/c:/users/$USER/Start Menu/LTspice XVII.lnk"'
+fi
+
+## Aplicaciones de Falstad programadas en Java
+
+alias falstad-help='echo -e "************************\n* Falstad applications *\n************************\n\nSignals tools:\n\n    dfilter (Digital Filters)\n\n    fourier (Fourier Series)\n\nElectromagnetism tools:\n\n    afilter (Analog Filter)\n\n    circuit (Analog Circuit Simulator)\n\n    diffraction (Fresnel Diffraction)\n\n    embox (Cavity Modes)\n\n    emwave1 (2-D Electrodynamics (TE))\n\n    emwave2 (2-D Electrodynamics (TM))\n"'
+
+if [[ -f "$PROG/dfilter/dfilter.jar" ]]
+then
+	alias dfilter='java -jar $PROG/dfilter/dfilter.jar'
+fi
+if [[ -f "$PROG/fourier/fourier.jar" ]]
+then
+	alias fourier='java -jar $PROG/fourier/fourier.jar'
+fi
+if [[ -f "$PROG/afilter/afilter.jar" ]]
+then
+	alias afilter='java -jar $PROG/afilter/afilter.jar'
+fi
+if [[ -f "$PROG/circuit/circuit.jar" ]]
+then
+	alias circuit='java -jar $PROG/circuit/circuit.jar'
+fi
+if [[ -f "$PROG/diffraction/diffraction.jar" ]]
+then
+	alias diffraction='java -jar $PROG/diffraction/diffraction.jar'
+fi
+if [[ -f "$PROG/embox/embox.jar" ]]
+then
+	alias embox='java -jar $PROG/embox/embox.jar'
+fi
+if [[ -f "$PROG/emwave1/emwave1.jar" ]]
+then
+	alias emwave1='java -jar $PROG/emwave1/emwave1.jar'
+fi
+if [[ -f "$PROG/emwave2/emwave2.jar" ]]
+then
+	alias emwave2='java -jar $PROG/emwave2/emwave2.jar'
+fi
+
+## Juegos Flash con Ruffle
+if [[ -d "$PROG/Ruffle/" ]]
+then
+	alias ruffle='$PROG/Ruffle/ruffle'
+	alias ruffle-readme='okular $PROG/Ruffle/README.md'
+	alias ruffle-license='okular $PROG/Ruffle/LICENSE.md'
+fi
+
+## Descargar vídeos
+if [[ -f "$PROG/yt-dlp" ]]
+then
+	alias yt-dlp='$PROG/yt-dlp'
+fi
+
+## Descargar de galerías
+if [[ -f "$PROG/gallery-dl" ]]
+then
+	alias gallery-dl='$PROG/gallery-dl'
+fi
+
+## Zotero
+if [[ -d "$PROG/Zotero/" ]]
+then
+	alias zotero='$PROG/Zotero/zotero'
+fi
+
+## Herramienta de impresión
+if [[ -f "$PROG/imp" ]]
+then
+	alias imp='$PROG/imp'
+fi
+
+
+
+# Navegador y aplicaciones en la web
+
+## Perfiles de Google Chrome
+alias google-chrome-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" &'
+alias google-chrome-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" &'
+alias google-chrome-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" &'
+alias google-chrome-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" &'
+alias google-chrome-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" &'
+alias google-chrome-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" &'
+alias chrome-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" &'
+alias chrome-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" &'
+alias chrome-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" &'
+alias chrome-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" &'
+alias chrome-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" &'
+alias chrome-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" &'
+
+## Perfiles de Microsoft Edge
+alias microsoft-edge-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" &'
+alias microsoft-edge-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" &'
+alias microsoft-edge-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" &'
+alias microsoft-edge-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" &'
+alias microsoft-edge-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" &'
+alias microsoft-edge-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" &'
+alias edge-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" &'
+alias edge-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" &'
+alias edge-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" &'
+alias edge-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" &'
+alias edge-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" &'
+alias edge-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" &'
+
+## Google Drive
+alias gdrive-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" drive.google.com &'
+alias gdrive-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" drive.google.com &'
+alias gdrive-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" drive.google.com &'
+alias gdrive-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" drive.google.com &'
+alias gdrive-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" drive.google.com &'
+alias gdrive-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" drive.google.com &'
+
+## OneDrive
+alias odrive-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" onedrive.live.com &'
+alias odrive-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" onedrive.live.com &'
+alias odrive-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" onedrive.live.com &'
+alias odrive-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" onedrive.live.com &'
+alias odrive-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" onedrive.live.com &'
+alias odrive-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" onedrive.live.com &'
+
+## OneDrive ("sharepoint" para UC3M)
+alias odrive-uc3m-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" uc3m-my.sharepoint.com &'
+alias odrive-uc3m-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" uc3m-my.sharepoint.com &'
+alias odrive-uc3m-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" uc3m-my.sharepoint.com &'
+alias odrive-uc3m-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" uc3m-my.sharepoint.com &'
+alias odrive-uc3m-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" uc3m-my.sharepoint.com &'
+alias odrive-uc3m-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" uc3m-my.sharepoint.com &'
+
+## Correo de Google
+alias gmail-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" gmail.com &'
+alias gmail-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" gmail.com &'
+alias gmail-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" gmail.com &'
+alias gmail-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" gmail.com &'
+alias gmail-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" gmail.com &'
+alias gmail-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" gmail.com &'
+
+## Correo de Microsoft
+alias hotmail-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" outlook.live.com &'
+alias hotmail-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" outlook.live.com &'
+alias hotmail-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" outlook.live.com &'
+alias hotmail-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" outlook.live.com &'
+alias hotmail-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" outlook.live.com &'
+alias hotmail-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" outlook.live.com &'
+
+## Calendario de Google
+alias calendar-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" calendar.google.com &'
+alias calendar-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" calendar.google.com &'
+alias calendar-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" calendar.google.com &'
+alias calendar-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" calendar.google.com &'
+alias calendar-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" calendar.google.com &'
+alias calendar-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" calendar.google.com &'
+
+## Calendario de Google en Firefox (varios usuarios)
+alias calendar-0='firefox https://calendar.google.com/calendar/u/0/r &'
+alias calendar-1='firefox https://calendar.google.com/calendar/u/1/r &'
+alias calendar-2='firefox https://calendar.google.com/calendar/u/2/r &'
+alias calendar-3='firefox https://calendar.google.com/calendar/u/3/r &'
+alias calendar-4='firefox https://calendar.google.com/calendar/u/4/r &'
+alias calendar-5='firefox https://calendar.google.com/calendar/u/5/r &'
+
+## Microsoft Office
+alias office-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" https://www.office.com &'
+alias office-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" https://www.office.com &'
+alias office-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" https://www.office.com &'
+alias office-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" https://www.office.com &'
+alias office-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" https://www.office.com &'
+alias office-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" https://www.office.com &'
+alias microsoft365-1='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 1/" https://www.microsoft365.com &'
+alias microsoft365-2='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 2/" https://www.microsoft365.com &'
+alias microsoft365-3='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 3/" https://www.microsoft365.com &'
+alias microsoft365-4='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 4/" https://www.microsoft365.com &'
+alias microsoft365-5='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 5/" https://www.microsoft365.com &'
+alias microsoft365-6='microsoft-edge --user-data-dir="$HOME/Microsoft Edge/Profile 6/" https://www.microsoft365.com &'
+
+## YouTube
+alias youtube-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" https://www.youtube.com &'
+alias youtube-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" https://www.youtube.com &'
+alias youtube-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" https://www.youtube.com &'
+alias youtube-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" https://www.youtube.com &'
+alias youtube-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" https://www.youtube.com &'
+alias youtube-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" https://www.youtube.com &'
+
+## Google Maps
+alias maps='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" https://www.google.es/maps &'
+alias maps-1='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 1/" https://www.google.es/maps &'
+alias maps-2='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 2/" https://www.google.es/maps &'
+alias maps-3='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 3/" https://www.google.es/maps &'
+alias maps-4='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 4/" https://www.google.es/maps &'
+alias maps-5='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 5/" https://www.google.es/maps &'
+alias maps-6='google-chrome --user-data-dir="$HOME/Google Chrome/Profile 6/" https://www.google.es/maps &'
+
+## YouTube en Firefox
+alias youtube='firefox https://www.youtube.com &'
+
+## WhatsApp
+alias whatsapp='firefox https://web.whatsapp.com &'
+
+## Traductor de Google
+alias traductor='firefox https://translate.google.com/ &'
+
+## Wikipedia (castellano e inglés)
+alias wikipedia-es='firefox https://es.wikipedia.org &'
+alias wikipedia-en='firefox https://en.wikipedia.org &'
+
+## RAE
+alias rae='firefox https://www.rae.es &'
+
+## Aula Global (UC3M)
+alias aulaglobal='firefox https://aulaglobal.uc3m.es &'
+
+## Reddit
+alias reddit='firefox https://www.reddit.com &'
+
+## Twitter
+alias twitter='firefox https://twitter.com &'
+
+## Instagram
+alias instagram='firefox https://www.instagram.com &'
+
+## TikTok
+alias tiktok='firefox https://www.tiktok.com/es &'

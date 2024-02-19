@@ -1,0 +1,278 @@
+###################################################
+#                                                 #
+# Variables, valores y rutas definidos al inicio. #
+#                                                 #
+###################################################
+
+
+
+# Variables del sistema y la sesión
+
+## Tipo de sesión
+
+if [[ -n "$SSH_CLIENT" ]] || [[ -n "$SSH_TTY" ]]
+then
+	SESSION_TYPE="remote/ssh"
+elif [[ $(whereis wsl | grep "/") ]]
+then
+	SESSION_TYPE="wsl$SHELL"
+else
+	SESSION_TYPE="$(uname -s)$SHELL"
+fi
+
+## Se configura la variable que identifique el "chroot" con el que trabajas (usado para configurar el "prompt").
+
+if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -z "${debian_chroot:-}" ]] && [[ -r /etc/debian_chroot ]]
+then
+	debian_chroot=$(cat /etc/debian_chroot)
+fi
+
+## Editamos los colores del sistema
+
+if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -x /usr/bin/dircolors ]]
+then
+	test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+	export LS_COLORS="$LS_COLORS:ow=30;44:" # fix ls color for folders with 777 permissions
+
+	export LESS_TERMCAP_mb=$'\E[1;31m'	# begin blink
+	export LESS_TERMCAP_md=$'\E[1;36m'	# begin bold
+	export LESS_TERMCAP_me=$'\E[0m'		# reset bold/blink
+	export LESS_TERMCAP_so=$'\E[01;33m'	# begin reverse video
+	export LESS_TERMCAP_se=$'\E[0m'		# reset reverse video
+	export LESS_TERMCAP_us=$'\E[1;32m'	# begin underline
+	export LESS_TERMCAP_ue=$'\E[0m'		# reset underline
+fi
+
+## Advertencias y errores de GCC coloreados.
+
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+
+## Editor preferido
+
+if [[ $SESSION_TYPE == "remote/ssh" ]]
+then
+	export EDITOR=nano
+fi
+
+if [[ $SESSION_TYPE == "wsl$SHELL" ]]
+then
+	export EDITOR="/mnt/c/Program Files/Notepad++/notepad++.exe"
+fi
+
+if [[ $SESSION_TYPE == "Linux$SHELL" ]]
+then
+	export EDITOR=kate
+fi
+
+if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
+then
+	export EDITOR=nano
+fi
+
+
+
+# Correo
+export EMAIL=""
+
+
+
+# Monitor
+
+if [[ $SESSION_TYPE == "remote/ssh" ]]
+then
+	export DISPLAY=localhost:10.0
+fi
+
+if [[ $SESSION_TYPE == "wsl$SHELL" ]]
+then
+	export DISPLAY=:0
+fi
+
+
+
+# Red
+
+## Se obtiene la IP en la red de área local
+export IP=$(hostname -I)
+
+## Se obtiene la IP pública
+#export P_IP=$(curl -s ifconfig.me)
+
+
+
+# Rutas útiles
+
+## Configuración básica
+
+### Scripts
+export SCRIPTS="$HOME/Scripts"
+
+### Preferencias
+export PREF="$HOME/Preferencias"
+
+### Carpeta de programas
+export PROG="$HOME/Programas"
+
+
+
+# Herramientas de desarrollo
+
+## Java
+
+### Java por defecto
+if [[ $(dpkg -s default-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/default-java
+fi
+
+### Java 8
+if [[ $(dpkg -s openjdk-8-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+fi
+
+### Java 11
+if [[ $(dpkg -s openjdk-11-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+fi
+
+### Java 17
+if [[ $(dpkg -s openjdk-17-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+fi
+
+### Java 18
+if [[ $(dpkg -s openjdk-18-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-18-openjdk-amd64
+fi
+
+### Java 19
+if [[ $(dpkg -s openjdk-19-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-19-openjdk-amd64
+fi
+
+### Java 20
+if [[ $(dpkg -s openjdk-20-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-20-openjdk-amd64
+fi
+
+### Java 21
+if [[ $(dpkg -s openjdk-21-jre 2> /dev/null) ]]
+then
+	export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+fi
+
+## MATLAB
+
+### Versión
+#export MATLAB_VERSION=""
+
+### Ubicación por defecto
+#export MATLAB="/usr/local/MATLAB/$MATLAB_VERSION/bin/matlab"
+
+### Ubicación en ~/Programas
+#export MATLAB="$PROG/MATLAB/$MATLAB_VERSION/bin/matlab"
+
+## Google Cloud
+
+if [[ -d "$PROG/google-cloud-sdk" ]]
+then
+	export GCLOUD_HOME="$PROG/google-cloud-sdk"
+fi
+
+## Android Studio
+
+if [[ -d "$PROG/Android" ]]
+then
+	### Directorio del programa
+	export ANDROID_STUDIO="$PROG/Android/android-studio"
+
+	### Directorio del SDK
+	export ANDROID_HOME="$PROG/Android/Sdk"
+fi
+
+## Flutter
+
+if [[ -d "$PROG/flutter" ]]
+then
+	### Directorio principal
+	export FLUTTER_HOME="$PROG/flutter"
+fi
+
+
+
+# Configuración del PATH
+
+## Configura el PATH de manera que incluya los binarios de los paquetes instalados. Por lo general esta opción no es necesaria.
+
+#PATH="/sbin:/usr/bin:$PATH"
+
+## Configura el PATH de manera que incluya los binarios privados del usuario, si éstos existen.
+
+if [[ -d "$HOME/bin" ]]
+then
+	PATH="$HOME/bin:$PATH"
+fi
+
+if [[ -d "$HOME/.local/bin" ]]
+then
+	PATH="$HOME/.local/bin:$PATH"
+fi
+
+## Path de cargo
+
+if [[ $(dpkg -s cargo 2> /dev/null) ]]
+then
+	export PATH="$HOME/.cargo/bin:$PATH"
+fi
+
+## Path de Java
+
+if [[ ! -z $JAVA_HOME ]]
+then
+	export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
+## Path de Android Studio
+
+if [[ ! -z $ANDROID_HOME ]]
+then
+	export PATH="$ANDROID_STUDIO/bin:$PATH"
+fi
+
+## Path de Flutter
+
+if [[ ! -z $FLUTTER_HOME ]]
+then
+	export PATH="$FLUTTER_HOME/bin:$PATH"
+fi
+
+## Path del SDK de Google Cloud
+
+if [[ -f "$GCLOUD_HOME/path.bash.inc" ]]
+then
+	. "$GCLOUD_HOME/path.bash.inc"
+fi
+
+
+
+# Dominios y direcciones IP
+
+## Telnet
+
+### Star Wars
+export starwars="towel.blinkenlights.nl 23"
+
+### Ajedrez
+export chess=freechess.org
+
+### Programas varios
+export telehack=telehack.com
+
+### Servidor de excusas
+export bofh="bofh.jeffballard.us 666"
