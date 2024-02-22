@@ -51,7 +51,7 @@ do
 			cp "$f_nube" "$f_cifra"
 
 			# Se extrae el fichero comprimido y se descifra
-			"$SCRIPTS/des_dir.sh" "$f_cifra" "$d_cifra" $uid_clave
+			"$SCRIPTS/dec_dir.sh" "$f_cifra" "$d_cifra" $uid_clave
 
 			echo "Se procede a la sincronización"
 			echo

@@ -24,10 +24,10 @@ Elementos:
 
 	nueva_clave.sh: Genera una nueva clave con una contraseña aleatoria.
 
-	en_dir.sh: Cifra el directorio indicado con la clave indicada.
+	enc_dir.sh: Cifra el directorio indicado con la clave indicada.
 
-	des_dir.sh: Descifra el directorio indicado con la clave indicada.
+	dec_dir.sh: Descifra el directorio indicado con la clave indicada.
 
-	cifra_up.sh: Respaldar cifrado con GPG. Depende de "en_dir.sh".
+	cifra_up.sh: Respaldar cifrado con GPG. Depende de "enc_dir.sh".
 
-	cifra_down.sh: Respaldar cifrado con GPG. Depende de "des_dir.sh".
+	cifra_down.sh: Respaldar cifrado con GPG. Depende de "dec_dir.sh".

@@ -59,7 +59,7 @@ do
 			echo
 
 			# Se comprime y cifra el directorio
-			"$SCRIPTS/en_dir.sh" "$d_cifra" "$f_cifra" $uid_clave
+			"$SCRIPTS/enc_dir.sh" "$d_cifra" "$f_cifra" $uid_clave
 
 			# Se comprueba si se ha cifrado el fichero
 			if [[ ! -f "$f_cifra" ]]

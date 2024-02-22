@@ -1,9 +1,8 @@
 #! /bin/bash
 
+# Comprobaciones de error
 
-
-# Se comprueba que el formato es correcto
-
+## Se comprueba que el formato es correcto
 if [[ $# != 3 ]]
 then
 
@@ -13,10 +12,7 @@ then
 	exit
 fi
 
-
-
-# Se comprueba si existe el directorio
-
+## Se comprueba si existe el directorio
 if [[ ! -d $1 ]]
 then
 
@@ -24,10 +20,7 @@ then
 	exit
 fi
 
-
-
-# Se comprueba si existe el fichero de salida
-
+## Se comprueba si existe el fichero de salida
 if [[ -f $2 ]]
 then
 
@@ -35,10 +28,7 @@ then
 	exit
 fi
 
-
-
-# Se comprueba si existe la clave
-
+## Se comprueba si existe la clave
 if [[ !$(gpg -k | grep $3) ]]
 then
 
@@ -46,10 +36,7 @@ then
 	exit
 fi
 
-
-
 # Se elimina el último carácter en el caso de que sea una barra
-
 if [[ $( echo $1 | awk '{ print substr( $0, length($0) ) }' ) == "/" ]]
 then
 
@@ -59,16 +46,10 @@ else
 	dire=$1
 fi
 
-
-
 # Fichero comprimido
-
 file="$dire.tgz"
 
-
-
 # Se comprueba si existe el fichero comprimido
-
 if [[ -f $file ]]
 then
 
@@ -76,20 +57,11 @@ then
 	exit
 fi
 
-
-
 # Comprimir
-
 tar -C "$dire" -czvf "$file" .
 
-
-
 # Encriptar
-
 gpg -e --cipher-algo AES256 -r $3 -o "$2" -v "$file"
 
-
-
 # Eliminar fichero comprimido
-
 rm "$file"

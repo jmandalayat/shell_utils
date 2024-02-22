@@ -1,9 +1,8 @@
 #! /bin/bash
 
+# Comprobaciones de error
 
-
-# Se comprueba que el formato es correcto
-
+## Se comprueba que el formato es correcto
 if [[ $# != 3 ]]
 then
 
@@ -13,10 +12,7 @@ then
 	exit
 fi
 
-
-
-# Se comprueba si existe el fichero
-
+## Se comprueba si existe el fichero
 if [[ ! -f $1 ]]
 then
 
@@ -24,10 +20,7 @@ then
 	exit
 fi
 
-
-
-# Se comprueba si existe el directorio de salida
-
+## Se comprueba si existe el directorio de salida
 if [[ -d $2 ]]
 then
 
@@ -35,10 +28,7 @@ then
 	exit
 fi
 
-
-
-# Se comprueba si existe la clave
-
+## Se comprueba si existe la clave
 if [[ !$(gpg -k | grep $3) ]]
 then
 
@@ -46,10 +36,7 @@ then
 	exit
 fi
 
-
-
 # Se elimina el último carácter en el caso de que sea una barra
-
 if [[ $( echo $2 | awk '{ print substr( $0, length($0) ) }' ) == "/" ]]
 then
 
@@ -59,16 +46,10 @@ else
 	dire=$2
 fi
 
-
-
 # Fichero comprimido
-
 file="$dire.tgz"
 
-
-
 # Se comprueba si existe el fichero comprimido
-
 if [[ -f $file ]]
 then
 
@@ -76,32 +57,17 @@ then
 	exit
 fi
 
-
-
 # Se selecciona la contraseña
-
 contra=$(grep "$3" "$GPGUTILSTABLE" | awk -F% '{ print $6 }')
 
-
-
 # Desencriptar
-
 gpg -d --pinentry-mode loopback --batch --passphrase "$contra" -o "$file" -v "$1"
 
-
-
 # Crear directorio de destino
-
 mkdir "$dire"
 
-
-
 # Descomprimir
-
 tar -C "$dire" -xvf "$file"
 
-
-
 # Eliminar fichero comprimido
-
 rm "$file"
