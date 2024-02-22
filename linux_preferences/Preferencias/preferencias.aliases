@@ -1,7 +1,7 @@
 #################################################################################
 #                                                                               #
 # Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
-# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
 # tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
 #                                                                               #
 #################################################################################
@@ -213,15 +213,27 @@ then
 fi
 
 ## Encriptar directorio
-if [[ -f "$SCRIPTS/en_dir.sh" ]]
+if [[ -f "$SCRIPTS/enc_dir.sh" ]]
 then
-	alias en-dir='"$SCRIPTS/en_dir.sh"'
+	alias en-dir='"$SCRIPTS/enc_dir.sh"'
 fi
 
 ## Desencriptar directorio
-if [[ -f "$SCRIPTS/des_dir.sh" ]]
+if [[ -f "$SCRIPTS/dec_dir.sh" ]]
 then
-	alias des-dir='"$SCRIPTS/des_dir.sh"'
+	alias des-dir='"$SCRIPTS/dec_dir.sh"'
+fi
+
+## Sincronizar y cifrar lista de directorios
+if [[ -f "$SCRIPTS/secsync_up.sh" ]]
+then
+	alias secsync-up='"$SCRIPTS/secsync_up.sh"'
+fi
+
+## Sincronizar y descifrar lista de directorios
+if [[ -f "$SCRIPTS/secsync_down.sh" ]]
+then
+	alias secsync-down='"$SCRIPTS/secsync_down.sh"'
 fi
 
 ## Dividir CSV en partes
