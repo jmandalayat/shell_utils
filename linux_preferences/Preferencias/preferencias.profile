@@ -19,21 +19,21 @@
 #umask 022.
 
 ## Configuración de variables y rutas del entorno
-if [[ -f ~/.bash_var ]]
+if [[ -f ~/.var ]]
 then
-	. ~/.bash_var
+	. ~/.var
 fi
 
-## Definición de alias especificados en el archivo ~/.bash_aliases.
-if [[ -f ~/.bash_aliases ]]
+## Definición de alias especificados en el archivo ~/.aliases.
+if [[ -f ~/.aliases ]]
 then
-	. ~/.bash_aliases
+	. ~/.aliases
 fi
 
-## Configuración del "prompt indicada en .bash_prompt"
-if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -f ~/.bash_prompt ]]
+## Configuración del "prompt indicada en .prompt"
+if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -f ~/.prompt ]]
 then
-	. ~/.bash_prompt
+	. ~/.prompt
 fi
 
 if [[ $SESSION_TYPE != "Darwin$SHELL" ]] # Estas opciones no se aplican en Mac
@@ -83,8 +83,8 @@ fi
 
 # Opciones de Google Cloud SDK
 
-## Se habilita el completado para "gcloud"
-if [[ -f "$GCLOUD_HOME/completion.bash.inc" ]] && [[ $SHELL == "/bin/bash" ]]
+# Se habilita el completado para "gcloud"
+if [[ -f "$GCLOUD_HOME/completion.bash.inc" ]] && [[ $SESSION_TYPE != "Darwin$SHELL" ]]
 then
 	. "$GCLOUD_HOME/completion.bash.inc"
 fi

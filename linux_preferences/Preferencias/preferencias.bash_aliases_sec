@@ -1,7 +1,0 @@
-#################################################################################
-#                                                                               #
-# Alias de comandos con información sensible. Se aconseja guardar el contenido  #
-# de este archivo en "~/.bash_aliases_sec", el cual, es llamado al iniciarse    #
-# una sesión en la terminal tal y como se especifica en "~/.bash_aliases_sec".  #
-#                                                                               #
-#################################################################################

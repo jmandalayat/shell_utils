@@ -93,12 +93,7 @@ fi
 # Red
 
 ## Se obtiene la IP en la red de área local
-if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
-then
-	export IP=$(hostname)
-else
-	export IP=$(hostname -I)
-fi
+export IP=$(hostname -I)
 
 ## Se obtiene la IP pública
 #export P_IP=$(curl -s ifconfig.me)
@@ -259,10 +254,10 @@ fi
 
 ## Path del SDK de Google Cloud
 
-#if [[ -f "$GCLOUD_HOME/path.bash.inc" ]]
-#then
-#	. "$GCLOUD_HOME/path.bash.inc"
-#fi
+if [[ -f "$GCLOUD_HOME/path.bash.inc" ]] && [[ $SESSION_TYPE != "Darwin$SHELL" ]]
+then
+	. "$GCLOUD_HOME/path.bash.inc"
+fi
 
 
 

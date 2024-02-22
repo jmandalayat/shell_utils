@@ -1,17 +1,17 @@
 #################################################################################
 #                                                                               #
 # Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
-# "~/.zsh_aliases", el cual, es llamado al iniciarse una sesión en la terminal #
-# tal y como se especifica en "~/.zshrc" y "~/.zprofile".                       #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
 #                                                                               #
 #################################################################################
 
 
 
 # Alias sensibles
-if [[ -f ~/.zsh_aliases_sec ]]
+if [[ -f ~/.aliases_sec ]]
 then
-	. ~/.zsh_aliases_sec
+	. ~/.aliases_sec
 fi
 
 
@@ -177,58 +177,112 @@ alias tex-purge='rm *.aux ; rm *.bcf ; rm *.lof ; rm *.log ; rm *.lot ; rm *.out
 # Scripts
 
 ## Actualizar paquetes
-alias actualizar='"$SCRIPTS/actualizar.sh"'
+if [[ -f "$SCRIPTS/actualizar.sh" ]]
+then
+	alias actualizar='"$SCRIPTS/actualizar.sh"'
+fi
 
 ## Actualizar preferencias
-alias preferencias='"$SCRIPTS/preferencias.sh"'
+if [[ -f "$SCRIPTS/preferencias.sh" ]]
+then
+	alias preferencias='"$SCRIPTS/preferencias.sh"'
+fi
 
 ## Exportar ajustes de KDE a la carpeta de preferencias
-alias export_kde='"$SCRIPTS/export_kde.sh"'
+if [[ -f "$SCRIPTS/export_kde.sh" ]]
+then
+	alias export_kde='"$SCRIPTS/export_kde.sh"'
+fi
 
 ## RFC
-alias rfc='"$SCRIPTS/rfc.sh"'
+if [[ -f "$SCRIPTS/rfc.sh" ]]
+then
+	alias rfc='"$SCRIPTS/rfc.sh"'
+fi
 
 ## Obtener línea
-alias getline='"$SCRIPTS/getline.sh"'
+if [[ -f "$SCRIPTS/getline.sh" ]]
+then
+	alias getline='"$SCRIPTS/getline.sh"'
+fi
 
 ## Monoespaciado en WhatsApp
-#alias wa_mono='"$SCRIPTS/wa_mono.sh"'
+if [[ -f "$SCRIPTS/wa_mono.sh" ]]
+then
+	alias wa_mono='"$SCRIPTS/wa_mono.sh"'
+fi
 
 ## Encriptar directorio
-alias en-dir='"$SCRIPTS/en_dir.sh"'
+if [[ -f "$SCRIPTS/en_dir.sh" ]]
+then
+	alias en-dir='"$SCRIPTS/en_dir.sh"'
+fi
 
 ## Desencriptar directorio
-alias des-dir='"$SCRIPTS/des_dir.sh"'
+if [[ -f "$SCRIPTS/des_dir.sh" ]]
+then
+	alias des-dir='"$SCRIPTS/des_dir.sh"'
+fi
 
 ## Dividir CSV en partes
-alias split_csv='"$SCRIPTS/split_csv.sh"'
+if [[ -f "$SCRIPTS/split_csv.sh" ]]
+then
+	alias split_csv='"$SCRIPTS/split_csv.sh"'
+fi
 
 ## Unir partes de CSV
-alias merge_csv='"$SCRIPTS/merge_csv.sh"'
+if [[ -f "$SCRIPTS/merge_csv.sh" ]]
+then
+	alias merge_csv='"$SCRIPTS/merge_csv.sh"'
+fi
 
 ## Leer texto de imagen
-alias leer='"$SCRIPTS/leer.sh"'
+if [[ -f "$SCRIPTS/leer.sh" ]]
+then
+	alias leer='"$SCRIPTS/leer.sh"'
+fi
 
 ## Actualizar repositorios
-alias pull-full='"$SCRIPTS/pull_full.sh"'
+if [[ -f "$SCRIPTS/pull_full.sh" ]]
+then
+	alias pull-full='"$SCRIPTS/pull_full.sh"'
+fi
 
 ## Crear nueva clave
-alias nueva_clave='$SCRIPTS/nueva_clave.sh'
+if [[ -f "$SCRIPTS/nueva_clave.sh" ]]
+then
+	alias nueva_clave='$SCRIPTS/nueva_clave.sh'
+fi
 
 ## Recortar clip
-alias recortar='"$SCRIPTS/recortar.sh"'
+if [[ -f "$SCRIPTS/recortar.sh" ]]
+then
+	alias recortar='"$SCRIPTS/recortar.sh"'
+fi
 
 ## Recortar vídeo
-alias recortar_video='"$SCRIPTS/recortar_video.sh"'
+if [[ -f "$SCRIPTS/recortar_video.sh" ]]
+then
+	alias recortar_video='"$SCRIPTS/recortar_video.sh"'
+fi
 
 ## Recortar audio
-alias recortar_audio='"$SCRIPTS/recortar_audio.sh"'
+if [[ -f "$SCRIPTS/recortar_audio.sh" ]]
+then
+	alias recortar_audio='"$SCRIPTS/recortar_audio.sh"'
+fi
 
 ## Conexiones SSH a los laboratorios de telemática
-alias lab_it='"$SCRIPTS/lab_it.sh"'
+if [[ -f "$SCRIPTS/lab_it.sh" ]]
+then
+	alias lab_it='"$SCRIPTS/lab_it.sh"'
+fi
 
 ## Conexión FTP con los laboratorios de telemática
-alias lab_it_ftp='"$SCRIPTS/lab_it_ftp.sh"'
+if [[ -f "$SCRIPTS/lab_it_ftp.sh" ]]
+then
+	alias lab_it_ftp='"$SCRIPTS/lab_it_ftp.sh"'
+fi
 
 
 
