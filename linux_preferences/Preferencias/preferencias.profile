@@ -13,81 +13,60 @@
 
 
 
-
-
 # Configuración básica
 
-
-
-# La umask por defecto se configura en /etc/profile. Para configurar umask para accesos por ssh, instala y configura el paquete libpam-umask.
-
+## La umask por defecto se configura en /etc/profile. Para configurar umask para accesos por ssh, instala y configura el paquete libpam-umask.
 #umask 022.
 
-
-
-# Configuración de variables y rutas del entorno
-
+## Configuración de variables y rutas del entorno
 if [[ -f ~/.bash_var ]]
 then
 	. ~/.bash_var
 fi
 
-
-
-# Definición de alias especificados en el archivo ~/.bash_aliases.
-
+## Definición de alias especificados en el archivo ~/.bash_aliases.
 if [[ -f ~/.bash_aliases ]]
 then
 	. ~/.bash_aliases
 fi
 
-
-
-# Configuración del "prompt indicada en .bash_prompt"
-
+## Configuración del "prompt indicada en .bash_prompt"
 if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -f ~/.bash_prompt ]]
 then
 	. ~/.bash_prompt
 fi
 
-
-
-if [[ $SESSION_TYPE != "Darwin$SHELL" ]]
+if [[ $SESSION_TYPE != "Darwin$SHELL" ]] # Estas opciones no se aplican en Mac
 then
 
-	# Si no se ejecuta interactivamente, que no se haga nada
-
+	## Si no se ejecuta interactivamente, que no se haga nada
 	case $- in
 		*i*) ;;
 		*) return;;
 	esac
 
-	# Configuración del historial
+	## Configuración del historial
 
-	# No se escriban líneas duplicadas o líneas empezando con espacios en el historial. Consulte bash(1) para más opciones.
+	### No se escriban líneas duplicadas o líneas empezando con espacios en el historial. Consulte bash(1) para más opciones.
 	HISTCONTROL=ignoreboth
 
-	# Añádase al archivo del historial, no sobreescriba.
+	### Añádase al archivo del historial, no sobreescriba.
 	shopt -s histappend
 
-	# Para configurar la longitud del historial, consulte HISTSIZE y HISTFILESIZE en bash(1).
+	### Para configurar la longitud del historial, consulte HISTSIZE y HISTFILESIZE en bash(1).
 	HISTSIZE=1000
 	HISTFILESIZE=2000
 
-	# Se comprueba el tamaño de la ventana después de cada comando y, si es necesario, se actualiza el valor de LINES y COLUMNS.
-
+	## Se comprueba el tamaño de la ventana después de cada comando y, si es necesario, se actualiza el valor de LINES y COLUMNS.
 	shopt -s checkwinsize
 
-	# Si se configura, el patrón "**" usado en el contexto de una expansión de nombre de ruta se referirá a todos los archivos, directorios y subdirectorios.
-
+	## Si se configura, el patrón "**" usado en el contexto de una expansión de nombre de ruta se referirá a todos los archivos, directorios y subdirectorios.
 	shopt -s globstar
 
-	# Se hace el comando "less" más amigable para archivos de entrada que no sean de texto. Consulte lesspipe(1).
-
+	## Se hace el comando "less" más amigable para archivos de entrada que no sean de texto. Consulte lesspipe(1).
 	[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
-	# Se habilitan características de completado.
-
+	## Se habilitan características de completado.
 	if ! shopt -oq posix
 	then
 		if [ -f /usr/share/bash-completion/bash_completion ]
@@ -102,67 +81,47 @@ fi
 
 
 
-
-
 # Opciones de Google Cloud SDK
 
 ## Se habilita el completado para "gcloud"
-if [[ -f "$GCLOUD_HOME/completion.bash.inc" ]]
+if [[ -f "$GCLOUD_HOME/completion.bash.inc" ]] && [[ $SHELL == "/bin/bash" ]]
 then
 	. "$GCLOUD_HOME/completion.bash.inc"
 fi
 
 
 
-
-
-
 # Presentación al abrir la terminal
 
-
-
-# Saludo inicial
-
+## Saludo inicial
 echo
 echo "Saludos, veterano liberal"
 
-
-
-# Se muestra la fecha actual
-
+## Se muestra la fecha actual
 echo
 echo -n "Hoy es "
 date
 
-
-
-# Se muestra el calendario
-
+## Se muestra el calendario
 if [[ $(whereis ncal | grep "/") ]]
 then
 	echo
 	ncal -b3wM
 fi
 
-
-
-# Se indica la IP en la red de área local
-
+## Se indica la IP en la red de área local
 echo
 echo "IP LAN: $IP"
 
-
-
-# Se indica la IP pública
-
+## Se indica la IP pública
 if [[ -n $P_IP ]]
 then
 	echo
 	echo "IP pública: $P_IP"
 fi
 
-
-
-# Se muestra una frase motivacional
-
-#fortune -a | cowsay
+## Se muestra una frase motivacional
+if [[ $(whereis fortune | grep "/") ]] && [[ $(whereis cowsay | grep "/") ]]
+then
+	fortune -a | cowsay
+fi

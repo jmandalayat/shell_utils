@@ -1,15 +1,15 @@
-#################################################################################
-#                                                                               #
-# Mis preferencias de inicio (~/.profile, ~/.bashrc):                           #
-#	- Ejecutado por el intérprete de comandos cuando un usuario inicia sesión   #
-#	(~/.profile) o cuando se inicia una nueva shell habiendo ya iniciado sesión #
-#	un usuario (~/.bashrc).                                                     #
-#	- El archivo ~/.profile no es leído por bash(1) si ~/.bash_profile o        #
-#	~/.bash_login existen.                                                      #
-#	- Consulte /usr/share/doc/bash/examples/startup-files (en el paquete        #
-#	"bash-doc") para más ejemplos.                                              #
-#                                                                               #
-#################################################################################
+##################################################################################
+#                                                                                #
+# Mis preferencias de inicio (~/.zprofile, ~/.zshrc):                            #
+#	- Ejecutado por el intérprete de comandos cuando un usuario inicia sesión    #
+#	(~/.zprofile) o cuando se inicia una nueva shell habiendo ya iniciado sesión #
+#	un usuario (~/.zshrc).                                                       #
+#	- El archivo ~/.zprofile no es leído por bash(1) si ~/.zsh_profile o         #
+#	~/.zsh_login existen.                                                        #
+#	- Consulte /usr/share/doc/bash/examples/startup-files (en el paquete         #
+#	"bash-doc") para más ejemplos.                                               #
+#                                                                                #
+##################################################################################
 
 
 
@@ -19,21 +19,21 @@
 #umask 022.
 
 ## Configuración de variables y rutas del entorno
-if [[ -f ~/.bash_var ]]
+if [[ -f ~/.zsh_var ]]
 then
-	. ~/.bash_var
+	. ~/.zsh_var
 fi
 
-## Definición de alias especificados en el archivo ~/.bash_aliases.
-if [[ -f ~/.bash_aliases ]]
+## Definición de alias especificados en el archivo ~/.zsh_aliases.
+if [[ -f ~/.zsh_aliases ]]
 then
-	. ~/.bash_aliases
+	. ~/.zsh_aliases
 fi
 
-## Configuración del "prompt indicada en .bash_prompt"
-if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -f ~/.bash_prompt ]]
+## Configuración del "prompt indicada en .zsh_prompt"
+if [[ $SESSION_TYPE != "Darwin$SHELL" ]] && [[ -f ~/.zsh_prompt ]]
 then
-	. ~/.bash_prompt
+	. ~/.zsh_prompt
 fi
 
 if [[ $SESSION_TYPE != "Darwin$SHELL" ]] # Estas opciones no se aplican en Mac

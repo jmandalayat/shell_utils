@@ -1,17 +1,17 @@
 #################################################################################
 #                                                                               #
 # Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
-# "~/.bash_aliases", el cual, es llamado al iniciarse una sesión en la terminal #
-# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+# "~/.zsh_aliases", el cual, es llamado al iniciarse una sesión en la terminal #
+# tal y como se especifica en "~/.zshrc" y "~/.zprofile".                       #
 #                                                                               #
 #################################################################################
 
 
 
 # Alias sensibles
-if [[ -f ~/.bash_aliases_sec ]]
+if [[ -f ~/.zsh_aliases_sec ]]
 then
-	. ~/.bash_aliases_sec
+	. ~/.zsh_aliases_sec
 fi
 
 

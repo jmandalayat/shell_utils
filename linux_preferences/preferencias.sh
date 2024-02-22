@@ -21,6 +21,11 @@ then
 	cp "$PREF/preferencias.bash_aliases" "$HOME/.bash_aliases"
 fi
 
+if [[ -f "$PREF/preferencias.bash_aliases_sec" ]]
+then
+	cp "$PREF/preferencias.bash_aliases_sec" "$HOME/.bash_aliases_sec"
+fi
+
 if [[ -f "$PREF/preferencias.bash_logout" ]]
 then
 	cp "$PREF/preferencias.bash_logout" "$HOME/.bash_logout"
