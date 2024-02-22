@@ -106,7 +106,12 @@ date
 if [[ $(whereis ncal | grep "/") ]]
 then
 	echo
-	ncal -b3wM
+	if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
+	then
+		ncal -3wM
+	else
+		ncal -b3wM
+	fi
 fi
 
 ## Se indica la IP en la red de área local

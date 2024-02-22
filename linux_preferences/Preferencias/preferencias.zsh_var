@@ -93,7 +93,12 @@ fi
 # Red
 
 ## Se obtiene la IP en la red de área local
-export IP=$(hostname -I)
+if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
+then
+	export IP=$(hostname)
+else
+	export IP=$(hostname -I)
+fi
 
 ## Se obtiene la IP pública
 #export P_IP=$(curl -s ifconfig.me)
