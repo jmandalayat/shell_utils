@@ -259,10 +259,10 @@ fi
 
 ## Path del SDK de Google Cloud
 
-if [[ -f "$GCLOUD_HOME/path.bash.inc" ]]
-then
-	. "$GCLOUD_HOME/path.bash.inc"
-fi
+#if [[ -f "$GCLOUD_HOME/path.bash.inc" ]]
+#then
+#	. "$GCLOUD_HOME/path.bash.inc"
+#fi
 
 
 

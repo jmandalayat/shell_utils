@@ -84,10 +84,10 @@ fi
 # Opciones de Google Cloud SDK
 
 ## Se habilita el completado para "gcloud"
-if [[ -f "$GCLOUD_HOME/completion.bash.inc" ]] && [[ $SHELL == "/bin/bash" ]]
-then
-	. "$GCLOUD_HOME/completion.bash.inc"
-fi
+#if [[ -f "$GCLOUD_HOME/completion.bash.inc" ]] && [[ $SHELL == "/bin/bash" ]]
+#then
+#	. "$GCLOUD_HOME/completion.bash.inc"
+#fi
 
 
 
@@ -108,7 +108,7 @@ then
 	echo
 	if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
 	then
-		ncal -3wM
+		ncal
 	else
 		ncal -b3wM
 	fi
