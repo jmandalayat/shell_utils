@@ -11,40 +11,11 @@ echo "Actualizando preferencias de usuario:"
 ls "$PREF"
 echo
 
-if [[ "$PREF/preferencias.bashrc" ]]
-then
-	cp "$PREF/preferencias.bashrc" "$HOME/.bashrc"
-fi
-
-if [[ -f "$PREF/preferencias.bash_aliases" ]]
-then
-	cp "$PREF/preferencias.bash_aliases" "$HOME/.bash_aliases"
-fi
-
-if [[ -f "$PREF/preferencias.bash_aliases_sec" ]]
-then
-	cp "$PREF/preferencias.bash_aliases_sec" "$HOME/.bash_aliases_sec"
-fi
-
-if [[ -f "$PREF/preferencias.bash_logout" ]]
-then
-	cp "$PREF/preferencias.bash_logout" "$HOME/.bash_logout"
-fi
-
-if [[ -f "$PREF/preferencias.bash_prompt" ]]
-then
-	cp "$PREF/preferencias.bash_prompt" "$HOME/.bash_prompt"
-fi
-
-if [[ -f "$PREF/preferencias.bash_var" ]]
-then
-	cp "$PREF/preferencias.bash_var" "$HOME/.bash_var"
-fi
-
-if [[ -f "$PREF/preferencias.profile" ]]
-then
-	cp "$PREF/preferencias.profile" "$HOME/.profile"
-fi
+for pref_file in $(ls "$PREF/preferencias."*)
+do
+	pref_hidden=${pref_file#"$PREF/preferencias"}
+	cp "$pref_file" "$HOME/$pref_hidden"
+done
 
 
 
