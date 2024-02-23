@@ -108,7 +108,7 @@ then
 	echo
 	if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
 	then
-		ncal
+		ncal -3w
 	else
 		ncal -b3wM
 	fi
