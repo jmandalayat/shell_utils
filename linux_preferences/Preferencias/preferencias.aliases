@@ -218,6 +218,18 @@ then
 	alias en-dir='"$SCRIPTS/enc_dir.sh"'
 fi
 
+## Sincronizar nube con directorios locales
+if [[ -f "$SCRIPTS/clone_up.sh" ]]
+then
+	alias clone-up='"$SCRIPTS/clone_up.sh"'
+fi
+
+## Sincronizar directorios locales con nube
+if [[ -f "$SCRIPTS/clone_down.sh" ]]
+then
+	alias clone-down='"$SCRIPTS/clone_down.sh"'
+fi
+
 ## Desencriptar directorio
 if [[ -f "$SCRIPTS/dec_dir.sh" ]]
 then
