@@ -29,9 +29,13 @@ then
 fi
 
 ## Se comprueba si existe la clave
-if [[ !$(gpg -k | grep $3) ]]
+keyexists="False"
+if [[ $(gpg -k | grep $3) ]]
 then
-
+	keyexists="True"
+fi
+if [[ $keyexists == "False" ]]
+then
 	echo "No existe la clave indicada: $3"
 	exit
 fi
@@ -40,28 +44,28 @@ fi
 if [[ $( echo $1 | awk '{ print substr( $0, length($0) ) }' ) == "/" ]]
 then
 
-	dire=$( echo $1 | awk '{ print substr( $0, 1, length($0)-1 ) }' )
+	dir_path=$( echo $1 | awk '{ print substr( $0, 1, length($0)-1 ) }' )
 else
 
-	dire=$1
+	dir_path=$1
 fi
 
 # Fichero comprimido
-file="$dire.tgz"
+compressedfile="$dir_path.tgz"
 
 # Se comprueba si existe el fichero comprimido
-if [[ -f $file ]]
+if [[ -f "$compressedfile" ]]
 then
 
-	echo "Ya existe el fichero comprimido: $file"
+	echo "Ya existe el fichero comprimido: $compressedfile"
 	exit
 fi
 
 # Comprimir
-tar -C "$dire" -czvf "$file" .
+tar -C "$dir_path" -czvf "$compressedfile" .
 
 # Encriptar
-gpg -e --cipher-algo AES256 -r $3 -o "$2" -v "$file"
+gpg -e --cipher-algo AES256 -r $3 -o "$2" -v "$compressedfile"
 
 # Eliminar fichero comprimido
-rm "$file"
+rm "$compressedfile"

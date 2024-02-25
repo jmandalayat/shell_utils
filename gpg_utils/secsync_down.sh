@@ -7,7 +7,7 @@ then
 	echo "Error: Entrada inválida"
 	echo
 	echo "Modo de uso:"
-	echo "   cifra_down [lista]"
+	echo "   secsync-down [lista]"
 	exit
 fi
 
@@ -16,27 +16,38 @@ then
 	echo "Error: No existe el fichero de lista especificado"
 	echo
 	echo "Modo de uso:"
-	echo "   cifra_down [lista]"
+	echo "   secsync-down [lista]"
 	exit
 fi
 
 
 
-for i in $(seq $(wc -l < "$1"))
+for gpgcipherlistline in $(cat "$1")
 do
-	dir_name=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
-	file_enc_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
-	dir_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
-	dir_metadata_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
-	file_enc_metadata_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
-	uid_key=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
+	dir_name=$(echo -n "$gpgcipherlistline" | awk -F% '{ print $1 }')
+	file_enc_path=$(echo -n "$gpgcipherlistline" | awk -F% '{ print $2 }')
+	dir_path=$(echo -n "$gpgcipherlistline" | awk -F% '{ print $3 }')
+	dir_metadata_path=$(echo -n "$gpgcipherlistline" | awk -F% '{ print $4 }')
+	file_enc_metadata_path=$(echo -n "$gpgcipherlistline" | awk -F% '{ print $5 }')
+	uid_key=$(echo -n "$gpgcipherlistline" | awk -F% '{ print $6 }')
 
 	if [[ -d $dir_path ]]
 	then
 		echo "Se va a sincronizar el directorio local con el fichero cifrado ($dir_name):"
 		echo
 
-		if [[ $(diff -q $(ls -l "$file_enc_path") "$file_enc_metadata_path" ) ]]
+		mustsync=""
+		if [[ -f "$file_enc_metadata_path" ]]
+		then
+			if [[ $(ls -l "$file_enc_path" | diff -q - "$file_enc_metadata_path") ]]
+			then
+				mustsync="1"
+			fi
+		else
+			mustsync="1"
+		fi
+
+		if [[ "$mustsync" ]]
 		then
 			echo "Se han encontrado diferencias, se procede a la sincronización"
 			echo

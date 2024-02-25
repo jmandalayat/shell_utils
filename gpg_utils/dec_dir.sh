@@ -29,9 +29,13 @@ then
 fi
 
 ## Se comprueba si existe la clave
-if [[ !$(gpg -k | grep $3) ]]
+keyexists="False"
+if [[ $(gpg -k | grep $3) ]]
 then
-
+	keyexists="True"
+fi
+if [[ $keyexists == "False" ]]
+then
 	echo "No existe la clave indicada: $3"
 	exit
 fi
@@ -40,20 +44,20 @@ fi
 if [[ $( echo $2 | awk '{ print substr( $0, length($0) ) }' ) == "/" ]]
 then
 
-	dire=$( echo $2 | awk '{ print substr( $0, 1, length($0)-1 ) }' )
+	dir_path=$( echo $2 | awk '{ print substr( $0, 1, length($0)-1 ) }' )
 else
 
-	dire=$2
+	dir_path=$2
 fi
 
 # Fichero comprimido
-file="$dire.tgz"
+compressedfile="$dir_path.tgz"
 
 # Se comprueba si existe el fichero comprimido
-if [[ -f $file ]]
+if [[ -f "$compressedfile" ]]
 then
 
-	echo "Ya existe el fichero comprimido: $file"
+	echo "Ya existe el fichero comprimido: $compressedfile"
 	exit
 fi
 
@@ -61,13 +65,13 @@ fi
 contra=$(grep "$3" "$GPGUTILSTABLE" | awk -F% '{ print $6 }')
 
 # Desencriptar
-gpg -d --pinentry-mode loopback --batch --passphrase "$contra" -o "$file" -v "$1"
+gpg -d --pinentry-mode loopback --batch --passphrase "$contra" -o "$compressedfile" -v "$1"
 
 # Crear directorio de destino
-mkdir "$dire"
+mkdir "$dir_path"
 
 # Descomprimir
-tar -C "$dire" -xvf "$file"
+tar -C "$dir_path" -xvf "$compressedfile"
 
 # Eliminar fichero comprimido
-rm "$file"
+rm "$compressedfile"
