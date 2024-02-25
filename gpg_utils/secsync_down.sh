@@ -24,45 +24,42 @@ fi
 
 for i in $(seq $(wc -l < "$1"))
 do
-	d_nombre=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
-	f_nube=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
-	f_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
-	d_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
-	d_local=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
-	uid_clave=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
+	dir_name=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
+	file_enc_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
+	dir_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
+	dir_metadata_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
+	file_enc_metadata_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
+	uid_key=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
 
-	if [[ -d $d_local ]]
+	if [[ -d $dir_path ]]
 	then
-		echo "Se va a sincronizar el directorio local con el fichero cifrado ($d_nombre):"
+		echo "Se va a sincronizar el directorio local con el fichero cifrado ($dir_name):"
 		echo
 
-		if [[ $(diff -qr "$f_nube" "$f_cifra") ]]
+		if [[ $(diff -q $(ls -l "$file_enc_path") "$file_enc_metadata_path" ) ]]
 		then
 			echo "Se han encontrado diferencias, se procede a la sincronización"
 			echo
 
 			# Se elimina el directorio a actualizar
-			if [[ -d "$d_cifra" ]]
+			if [[ -d "$dir_path" ]]
 			then
-				rm -r "$d_cifra"
+				rm -r "$dir_path"
 			fi
 
-			# Se copia el fichero
-			cp "$f_nube" "$f_cifra"
-
 			# Se extrae el fichero comprimido y se descifra
-			"$SCRIPTS/dec_dir.sh" "$f_cifra" "$d_cifra" $uid_clave
+			"$SCRIPTS/dec_dir.sh" "$file_enc_path" "$dir_path" $uid_key
 
-			echo "Se procede a la sincronización"
-			echo
+			# Se actualizan los metadatos del directorio
+			find "$dir_path" -type f -exec ls -l {} + > "$dir_metadata_path"
 
-			# Se sincronizan los directorios
-			rsync --progress -aP --delete "$d_cifra" "$d_local"
+			# Se actualizan los metadatos del fichero cifrado
+			ls -l "$file_enc_path" > "$file_enc_metadata_path"
 		else
 			echo "No se han encontrado diferencias, no se procede a la sincronización"
 			echo
 		fi
 	else
-		echo "No se va a sincronizar el directorio local con el fichero cifrado ($d_nombre), no existe el directorio"
+		echo "No se va a sincronizar el directorio local con el fichero cifrado ($dir_name), no existe el directorio"
 	fi
 done

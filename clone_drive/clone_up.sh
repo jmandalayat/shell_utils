@@ -41,18 +41,18 @@ fi
 
 for i in $(seq $(wc -l < "$1"))
 do
-	d_nombre=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
+	dir_name=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
 	d_nube=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
-	d_local=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
+	dir_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
 
-	if [[ -d $d_local ]]
+	if [[ -d $dir_path ]]
 	then
-		echo "Se va a sincronizar la nube con el sistema de ficheros ($d_nombre):"
+		echo "Se va a sincronizar la nube con el sistema de ficheros ($dir_name):"
 		echo
 
 		if [[ $2 != "-y" ]]
 		then
-			rclone --drive-acknowledge-abuse --dry-run -P sync "$d_local" "$d_nube"
+			rclone --drive-acknowledge-abuse --dry-run -P sync "$dir_path" "$d_nube"
 			echo
 
 			echo "¿Estás seguro de que deseas hacerlo?"
@@ -63,7 +63,7 @@ do
 		if [[ $resp == "y" ]]
 		then
 			echo "Confirmado"
-			rclone --drive-acknowledge-abuse -P sync "$d_local" "$d_nube"
+			rclone --drive-acknowledge-abuse -P sync "$dir_path" "$d_nube"
 		elif [[ $resp == "n" ]]
 		then
 			echo "Cancelado por el usuario"
@@ -72,6 +72,6 @@ do
 		fi
 		echo
 	else
-		echo "No se va a sincronizar la nube con el sistema de ficheros ($d_nombre), no existe el directorio"
+		echo "No se va a sincronizar la nube con el sistema de ficheros ($dir_name), no existe el directorio"
 	fi
 done

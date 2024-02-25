@@ -41,11 +41,11 @@ fi
 
 for i in $(seq $(wc -l < "$1"))
 do
-	d_nombre=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
+	dir_name=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
 	d_orig=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
 	d_dest=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
 
-	echo "Se va a sincronizar una ubicación en la nube con la otra ($d_nombre):"
+	echo "Se va a sincronizar una ubicación en la nube con la otra ($dir_name):"
 	echo
 
 	if [[ $2 != "-y" ]]

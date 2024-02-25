@@ -24,57 +24,36 @@ fi
 
 for i in $(seq $(wc -l < "$1"))
 do
-	d_nombre=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
-	f_nube=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
-	f_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
-	d_cifra=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
-	d_local=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
-	uid_clave=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
+	dir_name=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $1 }')
+	file_enc_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $2 }')
+	dir_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $3 }')
+	dir_metadata_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $4 }')
+	file_enc_metadata_path=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $5 }')
+	uid_key=$(head -n $i "$1" | tail -n 1 | awk -F% '{ print $6 }')
 
-	if [[ -d $d_local ]]
+	if [[ -d $dir_path ]]
 	then
-		echo "Se va a sincronizar el fichero cifrado con el directorio local ($d_nombre):"
+		echo "Se va a sincronizar el fichero cifrado con el directorio local ($dir_name):"
 		echo
 
-		if [[ ! -d $d_cifra ]]
-		then
-			mkdir $d_cifra
-		fi
-
-		if [[ $(diff -qr "$d_local" "$d_cifra") ]]
+		if [[ $(diff -q $(find "$dir_path" -type f -exec ls -l {} +) "$dir_metadata_path" ) ]]
 		then
 			echo "Se han encontrado diferencias, se procede a la sincronización"
 			echo
 
-			# Se sincronizan los directorios
-			rsync --progress -aP --delete "$d_local" "$d_cifra"
-
-			# Se elimina el fichero cifrado actual
-			if [[ -f "$f_cifra" ]]
-			then
-				rm "$f_cifra"
-			fi
-
-			echo "Se procede a la creación del fichero cifrado"
-			echo
+			# Se actualizan los metadatos del directorio
+			find "$dir_path" -type f -exec ls -l {} + > "$dir_metadata_path"
 
 			# Se comprime y cifra el directorio
-			"$SCRIPTS/enc_dir.sh" "$d_cifra" "$f_cifra" $uid_clave
+			"$SCRIPTS/enc_dir.sh" "$dir_path" "$file_enc_path" "$uid_key"
 
-			# Se comprueba si se ha cifrado el fichero
-			if [[ ! -f "$f_cifra" ]]
-			then
-				echo "No se ha podido cifrar el directorio: $d_nombre"
-				exit
-			fi
-
-			# Se copia en el directorio sincronizado
-			cp "$f_cifra" "$f_nube"
+			# Se actualizan los metadatos del fichero cifrado
+			ls -l "$file_enc_path" > "$file_enc_metadata_path"
 		else
 			echo "No se han encontrado diferencias, no se procede a la sincronización"
 			echo
 		fi
 	else
-		echo "No se va a sincronizar el fichero cifrado con el directorio local ($d_nombre), no existe el directorio"
+		echo "No se va a sincronizar el fichero cifrado con el directorio local ($dir_name), no existe el directorio"
 	fi
 done
