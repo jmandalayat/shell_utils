@@ -116,25 +116,25 @@ fi
 ### Compilar con PdfLaTeX
 if [[ $(whereis pdflatex | grep "/") ]]
 then
-	alias pdflatex='pdflatex -synctex=1 -interaction=nonstopmode *.tex'
+	alias pdflatex-quick='pdflatex -synctex=1 -interaction=nonstopmode *.tex'
 fi
 
 ### Compilar con LaTeX
 if [[ $(whereis latex | grep "/") ]]
 then
-	alias latex='latex -synctex=1 -interaction=nonstopmode *.tex'
+	alias latex-quick='latex -synctex=1 -interaction=nonstopmode *.tex'
 fi
 
 ### Compilar con XeLaTeX
 if [[ $(whereis xelatex | grep "/") ]]
 then
-	alias xelatex='xelatex -synctex=1 -interaction=nonstopmode *.tex'
+	alias xelatex-quick='xelatex -synctex=1 -interaction=nonstopmode *.tex'
 fi
 
 ### Compilar con LuaLaTeX
 if [[ $(whereis lualatex | grep "/") ]]
 then
-	alias lualatex='lualatex -interaction=nonstopmode *.tex'
+	alias lualatex-quick='lualatex -interaction=nonstopmode *.tex'
 fi
 
 ## Bibliografía
@@ -142,13 +142,13 @@ fi
 ### Compilar con Bibtex
 if [[ $(whereis bibtex | grep "/") ]]
 then
-	alias bibtex='bibtex *.aux'
+	alias bibtex-quick='bibtex *.aux'
 fi
 
 ### Compilar con Biber
 if [[ $(whereis biber | grep "/") ]]
 then
-	alias biber='biber *.bcf'
+	alias biber-quick='biber *.bcf'
 fi
 
 ### Rutina de compilación completa
