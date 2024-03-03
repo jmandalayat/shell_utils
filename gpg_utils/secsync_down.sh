@@ -27,12 +27,12 @@ do
 
 	listline=$(head -n $i "$1" | tail -n 1)
 
-	dir_name=$(echo -n "$listline" | awk -F=% '{ print $1 }')
-	file_enc_path=$(echo -n "$listline" | awk -F=% '{ print $2 }')
-	dir_path=$(echo -n "$listline" | awk -F=% '{ print $3 }')
-	dir_metadata_path=$(echo -n "$listline" | awk -F=% '{ print $4 }')
-	file_enc_metadata_path=$(echo -n "$listline" | awk -F=% '{ print $5 }')
-	uid_key=$(echo -n "$listline" | awk -F=% '{ print $6 }')
+	dir_name=$(echo -n "$listline" | awk -F% '{ print $1 }')
+	file_enc_path=$(echo -n "$listline" | awk -F% '{ print $2 }')
+	dir_path=$(echo -n "$listline" | awk -F% '{ print $3 }')
+	dir_metadata_path=$(echo -n "$listline" | awk -F% '{ print $4 }')
+	file_enc_metadata_path=$(echo -n "$listline" | awk -F% '{ print $5 }')
+	uid_key=$(echo -n "$listline" | awk -F% '{ print $6 }')
 
 	if [[ -d $dir_path ]]
 	then

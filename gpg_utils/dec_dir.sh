@@ -62,7 +62,7 @@ then
 fi
 
 # Se selecciona la contraseña
-contra=$(grep "$3" "$GPGUTILSTABLE" | awk -F=% '{ print $6 }')
+contra=$(grep "$3" "$GPGUTILSTABLE" | awk -F% '{ print $6 }')
 
 # Desencriptar
 gpg -d --pinentry-mode loopback --batch --passphrase "$contra" -o "$compressedfile" -v "$1"

@@ -44,9 +44,9 @@ do
 
 	listline=$(head -n $i "$1" | tail -n 1)
 
-	dir_name=$(echo -n "$listline" | awk -F=% '{ print $1 }')
-	d_nube=$(echo -n "$listline" | awk -F=% '{ print $2 }')
-	dir_path=$(echo -n "$listline" | awk -F=% '{ print $3 }')
+	dir_name=$(echo -n "$listline" | awk -F% '{ print $1 }')
+	d_nube=$(echo -n "$listline" | awk -F% '{ print $2 }')
+	dir_path=$(echo -n "$listline" | awk -F% '{ print $3 }')
 
 	if [[ -d $dir_path ]]
 	then

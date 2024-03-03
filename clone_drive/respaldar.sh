@@ -44,9 +44,9 @@ do
 
 	listline=$(head -n $i "$1" | tail -n 1)
 	
-	dir_name=$(echo -n "$listline" | awk -F=% '{ print $1 }')
-	d_orig=$(echo -n "$listline" | awk -F=% '{ print $2 }')
-	d_dest=$(echo -n "$listline" | awk -F=% '{ print $3 }')
+	dir_name=$(echo -n "$listline" | awk -F% '{ print $1 }')
+	d_orig=$(echo -n "$listline" | awk -F% '{ print $2 }')
+	d_dest=$(echo -n "$listline" | awk -F% '{ print $3 }')
 
 	echo "Se va a sincronizar una ubicación en la nube con la otra ($dir_name):"
 	echo
