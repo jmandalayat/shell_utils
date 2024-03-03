@@ -24,9 +24,12 @@ fi
 
 for i in $(seq $(wc -l < "$1"))
 do
-	enlace=$(head -n $i "$1" | tail -n 1 | awk -F=% '{ print $1 }')
+
+	listline=$(head -n $i "$1" | tail -n 1)
+	
+	enlace=$(echo -n "$listline" | awk -F=% '{ print $1 }')
 	enlace=${enlace//'#casa'/$HOME}
-	destino=$(head -n $i "$1" | tail -n 1 | awk -F=% '{ print $2 }')
+	destino=$(echo -n "$listline" | awk -F=% '{ print $2 }')
 	destino=${destino//'#casa'/$HOME}
 
 	if [[ -a $destino ]]

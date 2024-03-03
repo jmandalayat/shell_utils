@@ -22,14 +22,17 @@ fi
 
 
 
-for gpgcipherlistline in $(cat "$1")
+for i in $(seq $(wc -l < "$1"))
 do
-	dir_name=$(echo -n "$gpgcipherlistline" | awk -F=% '{ print $1 }')
-	file_enc_path=$(echo -n "$gpgcipherlistline" | awk -F=% '{ print $2 }')
-	dir_path=$(echo -n "$gpgcipherlistline" | awk -F=% '{ print $3 }')
-	dir_metadata_path=$(echo -n "$gpgcipherlistline" | awk -F=% '{ print $4 }')
-	file_enc_metadata_path=$(echo -n "$gpgcipherlistline" | awk -F=% '{ print $5 }')
-	uid_key=$(echo -n "$gpgcipherlistline" | awk -F=% '{ print $6 }')
+
+	listline=$(head -n $i "$1" | tail -n 1)
+
+	dir_name=$(echo -n "$listline" | awk -F=% '{ print $1 }')
+	file_enc_path=$(echo -n "$listline" | awk -F=% '{ print $2 }')
+	dir_path=$(echo -n "$listline" | awk -F=% '{ print $3 }')
+	dir_metadata_path=$(echo -n "$listline" | awk -F=% '{ print $4 }')
+	file_enc_metadata_path=$(echo -n "$listline" | awk -F=% '{ print $5 }')
+	uid_key=$(echo -n "$listline" | awk -F=% '{ print $6 }')
 
 	if [[ -d $dir_path ]]
 	then

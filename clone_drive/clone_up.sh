@@ -41,9 +41,9 @@ fi
 
 for i in $(seq $(wc -l < "$1"))
 do
-	dir_name=$(head -n $i "$1" | tail -n 1 | awk -F=% '{ print $1 }')
-	d_nube=$(head -n $i "$1" | tail -n 1 | awk -F=% '{ print $2 }')
-	dir_path=$(head -n $i "$1" | tail -n 1 | awk -F=% '{ print $3 }')
+	dir_name=$(echo -n "$listline" | awk -F=% '{ print $1 }')
+	d_nube=$(echo -n "$listline" | awk -F=% '{ print $2 }')
+	dir_path=$(echo -n "$listline" | awk -F=% '{ print $3 }')
 
 	if [[ -d $dir_path ]]
 	then
