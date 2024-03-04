@@ -66,7 +66,7 @@ fi
 
 if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
 then
-	export EDITOR=nano
+	export EDITOR=subl
 fi
 
 
@@ -214,54 +214,56 @@ fi
 # Configuración del PATH
 
 ## Configura el PATH de manera que incluya los binarios de los paquetes instalados. Por lo general esta opción no es necesaria.
-
 #PATH="/sbin:/usr/bin:$PATH"
 
 ## Configura el PATH de manera que incluya los binarios privados del usuario, si éstos existen.
-
 if [[ -d "$HOME/bin" ]]
 then
 	PATH="$HOME/bin:$PATH"
 fi
-
 if [[ -d "$HOME/.local/bin" ]]
 then
 	PATH="$HOME/.local/bin:$PATH"
 fi
 
 ## Path de cargo
-
 if [[ $(dpkg -s cargo 2> /dev/null) ]]
 then
 	export PATH="$HOME/.cargo/bin:$PATH"
 fi
 
 ## Path de Java
-
 if [[ ! -z $JAVA_HOME ]]
 then
 	export PATH="$JAVA_HOME/bin:$PATH"
 fi
 
 ## Path de Android Studio
-
 if [[ ! -z $ANDROID_HOME ]]
 then
 	export PATH="$ANDROID_STUDIO/bin:$PATH"
 fi
 
 ## Path de Flutter
-
 if [[ ! -z $FLUTTER_HOME ]]
 then
 	export PATH="$FLUTTER_HOME/bin:$PATH"
 fi
 
-## Path del SDK de Google Cloud
+## Path de Sublime Text
+if [[ -d "/Applications/Sublime Text.app" ]]
+then
+	export PATH="/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH"
+fi
 
-if [[ -f "$GCLOUD_HOME/path.bash.inc" ]] && [[ $SESSION_TYPE != "Darwin$SHELL" ]]
+## Path del SDK de Google Cloud
+if [[ -f "$GCLOUD_HOME/path.bash.inc" ]] && [[ $SHELL == "/bin/bash" ]]
 then
 	. "$GCLOUD_HOME/path.bash.inc"
+fi
+if [[ -f "$GCLOUD_HOME/path.zsh.inc" ]] && [[ $SHELL == "/bin/zsh" ]]
+then
+	. "$GCLOUD_HOME/path.zsh.inc"
 fi
 
 
