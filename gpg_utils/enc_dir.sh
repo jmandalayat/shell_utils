@@ -61,8 +61,17 @@ then
 	exit
 fi
 
-# Comprimir
-tar -C "$dir_path" -czvf "$compressedfile" .
+# Eliminar ficheros de metadatos y comprimir (varía según plataforma)
+if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
+then
+	tar --no-mac-metadata -C "$dir_path" -czvf "$compressedfile" .
+else
+	if [[ $SESSION_TYPE == "wsl$SHELL" ]]
+	then
+		find "$dir_path" -name *Zone.Identifier -exec rm {} +
+	fi
+	tar -C "$dir_path" -czvf "$compressedfile" .
+fi
 
 # Encriptar
 gpg -e --cipher-algo AES256 -r $3 -o "$2" -v "$compressedfile"
