@@ -62,6 +62,7 @@ then
 fi
 
 # Eliminar ficheros de metadatos y comprimir (varía según plataforma)
+'''
 if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
 then
 	tar --no-mac-metadata -C "$dir_path" -czvf "$compressedfile" .
@@ -72,6 +73,9 @@ else
 	fi
 	tar -C "$dir_path" -czvf "$compressedfile" .
 fi
+'''
+# Comprimir sin ficheros de metadatos
+tar --exclude "._*" --exclude "*DS_Store" --exclude "*Zone.Identifier" --exclude "*:com.apple*" -C "$dir_path" -czvf "$compressedfile" .
 
 # Encriptar
 gpg -e --cipher-algo AES256 -r $3 -o "$2" -v "$compressedfile"
