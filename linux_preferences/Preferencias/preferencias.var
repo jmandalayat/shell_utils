@@ -69,6 +69,13 @@ then
 	export EDITOR=subl
 fi
 
+## Deshabilitar comprobaciones de ficheros en Mac
+
+if [[ $SESSION_TYPE == "Darwin$SHELL" ]]
+then
+	export ZSH_DISABLE_COMPFIX=true
+fi
+
 
 
 # Correo
