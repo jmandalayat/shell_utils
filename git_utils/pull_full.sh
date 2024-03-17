@@ -3,7 +3,7 @@
 if [[ $# -ne 1 ]]
 then
 	echo "Modo de uso:"
-	echo -e "\tpull_full <ruta al directorio con repositorios>"
+	echo -e "\tpull-full <ruta al directorio con repositorios>"
 	exit
 
 fi
