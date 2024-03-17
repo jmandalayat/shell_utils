@@ -312,6 +312,12 @@ then
 	alias lab_it_ftp='"$SCRIPTS/lab_it_ftp.sh"'
 fi
 
+## Actualizar repositorios locales
+if [[ -f "$SCRIPTS/pull_full.sh" ]]
+then
+	alias pull-full='"$SCRIPTS/pull_full.sh"'
+fi
+
 
 
 # Herramientas externas instaladas (muchas de ellas en ~/Programas)
