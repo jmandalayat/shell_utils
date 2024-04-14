@@ -25,11 +25,11 @@ fi
 for i in $(seq $(wc -l < "$1"))
 do
 
-	listline=$(head -n $i "$1" | tail -n 1)
+	listLine=$(head -n $i "$1" | tail -n 1)
 	
-	enlace=$(echo -n "$listline" | awk -F% '{ print $1 }')
+	enlace=$(echo -n "$listLine" | awk -F% '{ print $1 }')
 	enlace=${enlace//'#casa'/$HOME}
-	destino=$(echo -n "$listline" | awk -F% '{ print $2 }')
+	destino=$(echo -n "$listLine" | awk -F% '{ print $2 }')
 	destino=${destino//'#casa'/$HOME}
 
 	if [[ -a $destino ]]

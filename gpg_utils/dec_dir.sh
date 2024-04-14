@@ -3,13 +3,27 @@
 # Comprobaciones de error
 
 ## Se comprueba que el formato es correcto
-if [[ $# != 3 ]]
+if [[ $# -lt 3 ]]
 then
 
 	echo "Modo de uso:"
-	echo "  des-dir [ruta al fichero] [directorio de salida] [UID de la clave]"
+	echo "  des-dir [ruta al fichero] [directorio de salida] [UID de la clave] [--debug]"
 
 	exit
+fi
+
+if [[ $4 == "--debug" ]]
+then
+
+	debugMode="True"
+fi
+
+if [[ $debugMode == "True" ]]
+then
+	echo "Running in debug mode with:"
+	echo "  1: $1"
+	echo "  2: $2"
+	echo "  3: $3"
 fi
 
 ## Se comprueba si existe el fichero
@@ -29,12 +43,12 @@ then
 fi
 
 ## Se comprueba si existe la clave
-keyexists="False"
+keyExists="False"
 if [[ $(gpg -k | grep $3) ]]
 then
-	keyexists="True"
+	keyExists="True"
 fi
-if [[ $keyexists == "False" ]]
+if [[ $keyExists == "False" ]]
 then
 	echo "No existe la clave indicada: $3"
 	exit
@@ -43,35 +57,46 @@ fi
 # Se elimina el último carácter en el caso de que sea una barra
 if [[ $( echo $2 | awk '{ print substr( $0, length($0) ) }' ) == "/" ]]
 then
-
-	dir_path=$( echo $2 | awk '{ print substr( $0, 1, length($0)-1 ) }' )
+	dirPath=$( echo $2 | awk '{ print substr( $0, 1, length($0)-1 ) }' )
 else
-
-	dir_path=$2
+	dirPath=$2
 fi
 
-# Fichero comprimido
-compressedfile="$dir_path.tgz"
+# Fichero comprimido temporal
+compressedFilePath=".temp_$dirPath"_"$(gpg --armor --gen-random 2 15 | tr -dc A-Za-z0-9).tgz"
+#compressedFilePath="$dirPath.tgz"
 
-# Se comprueba si existe el fichero comprimido
-if [[ -f "$compressedfile" ]]
+if [[ $debugMode == "True" ]]
 then
-
-	echo "Ya existe el fichero comprimido: $compressedfile"
+	echo "Current parameters:"
+	echo "  1: $1"
+	echo "  2: $2"
+	echo "  3: $3"
+	echo "  keyExists: $keyExists"
+	echo "  dirPath: $dirPath"
+	echo "  compressedFilePath: $compressedFilePath"
 	exit
 fi
 
+# Se comprueba si existe el fichero comprimido
+#if [[ -f "$compressedFilePath" ]]
+#then
+
+#	echo "Ya existe el fichero comprimido: $compressedFilePath"
+#	exit
+#fi
+
 # Se selecciona la contraseña
-contra=$(grep "$3" "$GPGUTILSTABLE" | awk -F% '{ print $6 }')
+userPassword=$(grep "$3" "$GPGUTILSTABLE" | awk -F% '{ print $6 }')
 
 # Desencriptar
-gpg -d --pinentry-mode loopback --batch --passphrase "$contra" -o "$compressedfile" -v "$1"
+gpg -d --pinentry-mode loopback --batch --passphrase "$userPassword" -o "$compressedFilePath" -v "$1"
 
 # Crear directorio de destino
-mkdir "$dir_path"
+mkdir "$dirPath"
 
 # Descomprimir
-tar -C "$dir_path" -xvf "$compressedfile"
+tar -C "$dirPath" -xvf "$compressedFilePath"
 
 # Eliminar fichero comprimido
-rm "$compressedfile"
+rm "$compressedFilePath"

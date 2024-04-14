@@ -25,24 +25,24 @@ fi
 for i in $(seq $(wc -l < "$1"))
 do
 
-	listline=$(head -n $i "$1" | tail -n 1)
+	listLine=$(head -n $i "$1" | tail -n 1)
 	
-	dir_name=$(echo -n "$listline" | awk -F% '{ print $1 }')
-	file_enc_path=$(echo -n "$listline" | awk -F% '{ print $2 }')
-	dir_path=$(echo -n "$listline" | awk -F% '{ print $3 }')
-	dir_metadata_path=$(echo -n "$listline" | awk -F% '{ print $4 }')
-	file_enc_metadata_path=$(echo -n "$listline" | awk -F% '{ print $5 }')
-	uid_key=$(echo -n "$listline" | awk -F% '{ print $6 }')
+	dirName=$(echo -n "$listLine" | awk -F% '{ print $1 }')
+	encryptedFilePath=$(echo -n "$listLine" | awk -F% '{ print $2 }')
+	dirPath=$(echo -n "$listLine" | awk -F% '{ print $3 }')
+	dirMetadataPath=$(echo -n "$listLine" | awk -F% '{ print $4 }')
+	encryptedFileMetadataPath=$(echo -n "$listLine" | awk -F% '{ print $5 }')
+	keyUID=$(echo -n "$listLine" | awk -F% '{ print $6 }')
 
-	if [[ -d $dir_path ]]
+	if [[ -d $dirPath ]]
 	then
-		echo "Se va a sincronizar el fichero cifrado con el directorio local ($dir_name):"
+		echo "Se va a sincronizar el fichero cifrado con el directorio local ($dirName):"
 		echo
 
 		mustsync=""
-		if [[ -f "$dir_metadata_path" ]]
+		if [[ -f "$dirMetadataPath" ]]
 		then
-			if [[ $(find "$dir_path" -type f -exec ls -l {} + | diff -q - "$dir_metadata_path") ]]
+			if [[ $(find "$dirPath" -type f -exec ls -l {} + | diff -q - "$dirMetadataPath") ]]
 			then
 				mustsync="1"
 			fi
@@ -56,24 +56,24 @@ do
 			echo
 
 			# Se elimina el fichero a actualizar
-			if [[ -f "$file_enc_path" ]]
+			if [[ -f "$encryptedFilePath" ]]
 			then
-				rm "$file_enc_path"
+				rm "$encryptedFilePath"
 			fi
 
 			# Se comprime y cifra el directorio
-			"$SCRIPTS/enc_dir.sh" "$dir_path" "$file_enc_path" "$uid_key"
+			"$SCRIPTS/enc_dir.sh" "$dirPath" "$encryptedFilePath" "$keyUID"
 
 			# Se actualizan los metadatos del directorio
-			find "$dir_path" -type f -exec ls -l {} + > "$dir_metadata_path"
+			find "$dirPath" -type f -exec ls -l {} + > "$dirMetadataPath"
 
 			# Se actualizan los metadatos del fichero cifrado
-			ls -l "$file_enc_path" > "$file_enc_metadata_path"
+			ls -l "$encryptedFilePath" > "$encryptedFileMetadataPath"
 		else
 			echo "No se han encontrado diferencias, no se procede a la sincronización"
 			echo
 		fi
 	else
-		echo "No se va a sincronizar el fichero cifrado con el directorio local ($dir_name), no existe el directorio"
+		echo "No se va a sincronizar el fichero cifrado con el directorio local ($dirName), no existe el directorio"
 	fi
 done

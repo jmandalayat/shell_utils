@@ -42,18 +42,18 @@ fi
 for i in $(seq $(wc -l < "$1"))
 do
 
-	listline=$(head -n $i "$1" | tail -n 1)
+	listLine=$(head -n $i "$1" | tail -n 1)
 	
-	dir_name=$(echo -n "$listline" | awk -F% '{ print $1 }')
-	d_orig=$(echo -n "$listline" | awk -F% '{ print $2 }')
-	d_dest=$(echo -n "$listline" | awk -F% '{ print $3 }')
+	dirName=$(echo -n "$listLine" | awk -F% '{ print $1 }')
+	dirOrigin=$(echo -n "$listLine" | awk -F% '{ print $2 }')
+	dirDestination=$(echo -n "$listLine" | awk -F% '{ print $3 }')
 
-	echo "Se va a sincronizar una ubicación en la nube con la otra ($dir_name):"
+	echo "Se va a sincronizar una ubicación en la nube con la otra ($dirName):"
 	echo
 
 	if [[ $2 != "-y" ]]
 	then
-		rclone --drive-acknowledge-abuse --dry-run -P sync "$d_orig" "$d_dest"
+		rclone --drive-acknowledge-abuse --dry-run -P sync "$dirOrigin" "$dirDestination"
 		echo
 
 		echo "¿Estás seguro de que deseas hacerlo?"
@@ -64,7 +64,7 @@ do
 	if [[ $resp == "y" ]]
 	then
 		echo "Confirmado"
-		rclone --drive-acknowledge-abuse -P sync "$d_orig" "$d_dest"
+		rclone --drive-acknowledge-abuse -P sync "$dirOrigin" "$dirDestination"
 	elif [[ $resp == "n" ]]
 	then
 		echo "Cancelado por el usuario"
