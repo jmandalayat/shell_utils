@@ -33,7 +33,7 @@ do
 	then
 
 		# Formatea la ruta para hacerla más manejable
-		dirPath=$(realpath $1)
+		dirPath=$(realpath $dirPath)
 		if [[ $( echo $dirPath | awk '{ print substr( $0, length($0) ) }' ) == "/" ]]
 		then
 			dirPath=$( echo $dirPath | awk '{ print substr( $0, 1, length($0)-1 ) }' )
@@ -53,6 +53,6 @@ do
 		# Comprimir sin ficheros de metadatos
 		tar --exclude "._*" --exclude "*DS_Store" --exclude "*Zone.Identifier" --exclude "*:com.apple*" -C "$dirPath" -czvf "$compressedFilePath" .
 	else
-		echo "No existe el directorio especificado: $dirName"
+		echo "No existe el directorio especificado: $dirPath"
 	fi
 done
