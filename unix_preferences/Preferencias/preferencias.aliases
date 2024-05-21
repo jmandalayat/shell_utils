@@ -184,7 +184,7 @@ then
 fi
 
 ## Eliminar ficheros generados
-alias tex-purge='rm *.aux ; rm *.bbl ; rm *.bcf ; rm *.blg ; rm *.cut ; rm *.lof ; rm *.log ; rm *.lot ; rm *.out ; rm *.pytxcode ; rm *.run.xml ; rm *.synctex ; rm *.synctex.gz ; rm *.synctex.gz(busy) ; rm *.toc ; rm pdfa.xmpi'
+alias tex-purge='rm *.aux ; rm *.bbl ; rm *.bcf ; rm *.blg ; rm *.cut ; rm *.lof ; rm *.log ; rm *.lot ; rm *.out ; rm *.pytxcode ; rm *.run.xml ; rm *.synctex ; rm *.synctex.gz ; rm "*.synctex.gz(busy)" ; rm *.toc ; rm pdfa.xmpi'
 
 
 
