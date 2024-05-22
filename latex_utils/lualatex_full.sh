@@ -14,7 +14,7 @@ rm *.pytxcode
 rm *.run.xml
 rm *.synctex
 rm *.synctex.gz
-rm "*.synctex.gz(busy)"
+rm *".synctex.gz(busy)"
 rm *.toc
 rm pdfa.xmpi
 
