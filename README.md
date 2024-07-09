@@ -1,10 +1,11 @@
 Shell utils (shell_utils)
-=========================
+===
 
-Scripts, configuration files and other useful items to work with command line.anima_shell
+Scripts, configuration files and other useful items to work with command line.
 
 | Directory | Description |
 |---|---|
+| [`anima_shell`](anima_shell) | ASCII art scripts. See [its `README.md` file](anima_shell/README.md). |
 | [`clone_drive`](clone_drive) | *rclone* scripts. See [its `README.md` file](clone_drive/README.md). |
 | [`csv_utils`](csv_utils) | CSV management scripts. See [its `README.md` file](csv_utils/README.md). |
 | [`dir_list`](dir_list) | Directory management scripts. See [its `README.md` file](dir_list/README.md). |

@@ -1,4 +1,5 @@
-Sincronización
+clone_drive
+===
 
 Scripts de sincronización del sistema de ficheros. Tenemos:
 		clone_down.sh
