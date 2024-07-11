@@ -1,0 +1,19 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+## Google Cloud
+if [[ $(whereis gcloud | grep "/") ]]
+then
+	### Consultar log
+	alias gcloud-log='gcloud app logs tail -s default'
+
+	### Desplegar aplicación
+	alias gcloud-deploy='gcloud app deploy'
+fi

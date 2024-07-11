@@ -1,0 +1,12 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+## Eliminar ficheros de git
+alias ungit='find . -name *git* -exec rm -r {} +'

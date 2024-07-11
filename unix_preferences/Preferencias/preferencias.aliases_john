@@ -1,0 +1,34 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+## John the Ripper
+if [[ -d "$PROG/john/" ]]
+then
+	alias john='$PROG/john/run/john'
+	alias john-pot='cat $PROG/john/run/john.pot'
+	alias john-clear='rm $PROG/john/run/john.pot ; rm $PROG/john/run/john.log'
+	alias john-conf='"$EDITOR" $PROG/john/run/john.conf'
+	alias john-log='cat $PROG/john/run/john.log'
+	alias john-restart='john-clear && cd $PROG/john-1.9.0/run/ && make clean generic'
+	alias "john-doc-changes"='cat $PROG/john/doc/CHANGES'
+	alias "john-doc-config"='cat $PROG/john/doc/CONFIG'
+	alias "john-doc-contact"='cat $PROG/john/doc/CONTACT'
+	alias "john-doc-copying"='cat $PROG/john/doc/COPYING'
+	alias "john-doc-credits"='cat $PROG/john/doc/CREDITS'
+	alias "john-doc-examples"='cat $PROG/john/doc/EXAMPLES'
+	alias "john-doc-external"='cat $PROG/john/doc/EXTERNAL'
+	alias "john-doc-faq"='cat $PROG/john/doc/FAQ'
+	alias "john-doc-install"='cat $PROG/john/doc/INSTALL'
+	alias "john-doc-license"='cat $PROG/john/doc/LICENSE'
+	alias "john-doc-modes"='cat $PROG/john/doc/MODES'
+	alias "john-doc-options"='cat $PROG/john/doc/OPTIONS'
+	alias "john-doc-readme"='cat $PROG/john/doc/README'
+	alias "john-doc-rules"='cat $PROG/john/doc/RULES'
+fi

@@ -1,0 +1,15 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+## Android Studio (solo es necesario configurar este alias si la ruta a Android Studio no ha sido añadida al Path).
+if [[ ! -z $ANDROID_STUDIO ]] && [[ ! $(echo "$PATH" | grep "$ANDROID_STUDIO") ]]
+then
+	alias android-studio='$ANDROID_STUDIO/bin/studio.sh'
+fi

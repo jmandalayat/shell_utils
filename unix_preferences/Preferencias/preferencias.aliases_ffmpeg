@@ -1,0 +1,15 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+if [[ $(whereis ffmpeg | grep "/") ]]
+then
+	### Unir audio y video
+	alias unir='ffmpeg -i video.mp4 -i audio.mp4 -c:v copy -c:a aac salida.mp4'
+fi

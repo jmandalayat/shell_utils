@@ -1,0 +1,19 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+## Traductor "trans"
+if [[ $(whereis trans | grep "/") ]]
+then
+	## Traducir de castellano a inglés
+	alias trad-es-in='trans es:en'
+
+	## Traducir de inglés a castellano
+	alias trad-in-es='trans en:es'
+fi

@@ -1,0 +1,27 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+## Eclipse
+if [[ -f "$PROG/eclipse-java/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-java/eclipse'
+fi
+if [[ -f "$PROG/eclipse-cpp/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-cpp/eclipse'
+fi
+if [[ -f "$PROG/eclipse-web/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-web/eclipse'
+fi
+if [[ -f "$PROG/eclipse-cdist/eclipse" ]]
+then
+	alias eclipse-java='$PROG/eclipse-cdist/eclipse'
+fi

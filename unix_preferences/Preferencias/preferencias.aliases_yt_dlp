@@ -1,0 +1,25 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+if [[ $(whereis yt-dlp | grep "/") ]]
+then
+
+	## Ver formatos de la fuente
+	alias desc-formato='yt-dlp -F'
+
+	## Descargar música de YouTube
+	alias desc-musica='yt-dlp --audio-quality max --extract-audio'
+
+	## Descargar en formato MP4
+	alias desc-mp4='yt-dlp -f mp4'
+
+	## Descargar en 1080p (se usan los flujos más frecuentes en YouTube)
+	alias desc-1080p='yt-dlp -f 137+140'
+fi

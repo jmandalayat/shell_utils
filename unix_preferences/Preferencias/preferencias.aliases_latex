@@ -1,0 +1,76 @@
+#################################################################################
+#                                                                               #
+# Alias de comandos. Se aconseja guardar el contenido de este archivo en        #
+# "~/.aliases", el cual, es llamado al iniciarse una sesión en la terminal      #
+# tal y como se especifica en "~/.bashrc" y "~/.profile".                       #
+#                                                                               #
+#################################################################################
+
+
+
+# LaTeX
+
+## Compiladores
+
+### Compilar con PdfLaTeX
+if [[ $(whereis pdflatex | grep "/") ]]
+then
+	alias pdflatex-quick='pdflatex -synctex=1 -interaction=nonstopmode *.tex'
+	alias pdflatex-short='pdflatex -synctex=1 -interaction=nonstopmode'
+fi
+
+### Compilar con LaTeX
+if [[ $(whereis latex | grep "/") ]]
+then
+	alias latex-quick='latex -synctex=1 -interaction=nonstopmode *.tex'
+	alias latex-short='latex -synctex=1 -interaction=nonstopmode'
+fi
+
+### Compilar con XeLaTeX
+if [[ $(whereis xelatex | grep "/") ]]
+then
+	alias xelatex-quick='xelatex -synctex=1 -interaction=nonstopmode *.tex'
+	alias xelatex-short='xelatex -synctex=1 -interaction=nonstopmode'
+fi
+
+### Compilar con LuaLaTeX
+if [[ $(whereis lualatex | grep "/") ]]
+then
+	alias lualatex-quick='lualatex -interaction=nonstopmode *.tex'
+	alias lualatex-short='lualatex -synctex=1 -interaction=nonstopmode'
+fi
+
+## Bibliografía
+
+### Compilar con Bibtex
+if [[ $(whereis bibtex | grep "/") ]]
+then
+	alias bibtex-quick='bibtex *.aux'
+fi
+
+### Compilar con Biber
+if [[ $(whereis biber | grep "/") ]]
+then
+	alias biber-quick='biber *.bcf'
+fi
+
+### Rutina de compilación completa
+if [[ $(alias pdflatex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias pdflatex-full='"$SCRIPTS/pdflatex_full.sh"'
+fi
+if [[ $(alias latex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias latex-full='"$SCRIPTS/latex_full.sh"'
+fi
+if [[ $(alias xelatex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias xelatex-full='"$SCRIPTS/xelatex_full.sh"'
+fi
+if [[ $(alias lualatex 2> /dev/null) && $(alias biber 2> /dev/null) ]]
+then
+	alias lualatex-full='"$SCRIPTS/lualatex_full.sh"'
+fi
+
+## Eliminar ficheros generados
+alias tex-purge='rm *.aux ; rm *.bbl ; rm *.bcf ; rm *.blg ; rm *.cut ; rm *.lof ; rm *.log ; rm *.lot ; rm *.out ; rm *.pytxcode ; rm *.run.xml ; rm *.synctex ; rm *.synctex.gz ; rm *".synctex.gz(busy)" ; rm *.toc ; rm pdfa.xmpi'

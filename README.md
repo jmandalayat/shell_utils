@@ -10,6 +10,7 @@ Scripts, configuration files and other useful items to work with command line.
 | [`csv_utils`](csv_utils) | CSV management scripts. See [its `README.md` file](csv_utils/README.md). |
 | [`dir_list`](dir_list) | Directory management scripts. See [its `README.md` file](dir_list/README.md). |
 | [`ffmpeg_utils`](ffmpeg_utils) | *ffmpeg* scripts. See [its `README.md` file](ffmpeg_utils/README.md). |
+| [`file_sys_utils`](file_sys_utils) | Scripts to manage Linux file system. See [its `README.md` file](file_sys_utils/README.md). |
 | [`getline_shell`](getline_shell) | Script to get the line of a file. See [its `README.md` file](getline_shell/README.md). |
 | [`git_utils`](git_utils) | *git* scripts. See [its `README.md` file](git_utils/README.md). |
 | [`gpg_utils`](gpg_utils) | *gpg* scripts. See [its `README.md` file](gpg_utils/README.md). |
