@@ -23,6 +23,7 @@ Scripts, configuration files and other useful items to work with command line.
 | [`simple_wine`](simple_wine) | Wine scripts. See [its `README.md` file](simple_wine/README.md). |
 | [`sym_list`](sym_list) | *ln* scripts. See [its `README.md` file](sym_list/README.md). |
 | [`tar_utils`](tar_utils) | *tar* scripts. See [its `README.md` file](tar_utils/README.md). |
+| [`templates`](templates) | Code templates to maintain this repository. See [its `README.md` file](templates/README.md). |
 | [`tesseract_utils`](tesseract_utils) | *tesseract* scripts. See [its `README.md` file](tesseract_utils/README.md). |
 | [`uc3m_utils`](uc3m_utils) | Scripts to manage [Charles III University of Madrid](www.uc3m.es) services. See [its `README.md` file](uc3m_utils/README.md). |
 | [`unix_info`](unix_info) | Utility to get system info on Unix systems. See [its `README.md` file](unix_info/README.md). |

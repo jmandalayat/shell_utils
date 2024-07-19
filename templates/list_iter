@@ -1,0 +1,9 @@
+for i in $(seq $(wc -l < "$listPath"))
+do
+
+	listLine=$(head -n $i "$listPath" | tail -n 1)
+
+	listElem1=$(echo -n "$listLine" | awk -F% '{ print $1 }')
+	listElem2=$(echo -n "$listLine" | awk -F% '{ print $2 }')
+	listElem3=$(echo -n "$listLine" | awk -F% '{ print $3 }')
+done

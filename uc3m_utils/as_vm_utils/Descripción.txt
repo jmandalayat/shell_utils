@@ -1,5 +1,0 @@
-Utilidades para la MV de AS
-
-lib_memo.sh: Script para liberar espacio de almacenamiento en la máquina virtual de Arquitectura de Sistemas.
-
-mv_vbox_lib.sh: Usado en VirtualBox para mover ficheros al sistema de ficheros de Windows.
