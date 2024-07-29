@@ -1,9 +1,17 @@
 #! /bin/bash
 
+if [[ $# != 1 ]]
+then
+	$PREF=$1
+else
+	echo "A single argument must be provided as path"
+	exit
+fi
+
 if [[ -z $PREF ]]
 then
 
-	echo "No se ha definido un directorio de preferencias en la variable PREF"
+	echo "No existe el directorio especificado $PREF"
 	exit
 fi
 

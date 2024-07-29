@@ -1,0 +1,6 @@
+if [[ $# == $number ]]
+then
+	echo "EQUAL"
+else
+	echo "DIFFERENT"
+fi
